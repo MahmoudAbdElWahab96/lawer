@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers\Site;
+
+use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
+use Illuminate\Http\Request;
+
+class ContactController extends Controller
+{
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:50'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'practice_area_id' => ['nullable', 'exists:practice_areas,id'],
+            'message' => ['required', 'string', 'min:10', 'max:5000'],
+        ], [
+            'name.required' => __('site.validation.name_required'),
+            'phone.required' => __('site.validation.phone_required'),
+            'email.email' => __('site.validation.email'),
+            'message.required' => __('site.validation.message_required'),
+            'message.min' => __('site.validation.message_min'),
+        ]);
+
+        ContactMessage::create($validated + [
+            'locale' => app()->getLocale(),
+        ]);
+
+        return back()
+            ->withFragment('contact')
+            ->with('contact_success', true);
+    }
+}
