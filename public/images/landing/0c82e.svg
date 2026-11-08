@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="600" height="460" viewBox="0 0 600 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame" clip-path="url(#clip0_0_478)">
+<g id="Group">
+<path id="Vector" d="M-20 120C120 140 220 90 340 110C460 130 560 170 640 150" stroke-width="14" stroke-linecap="round" stroke="#E4DCCB"/>
+<path id="Vector_2" d="M-20 330C140 300 260 360 380 330C500 300 560 280 640 300" stroke-width="14" stroke-linecap="round" stroke="#E4DCCB"/>
+<path id="Vector_3" d="M180 -20C200 120 160 250 210 480" stroke-width="14" stroke-linecap="round" stroke="#E4DCCB"/>
+<path id="Vector_4" d="M430 -20C410 140 470 280 440 480" stroke-width="14" stroke-linecap="round" stroke="#E4DCCB"/>
+</g>
+<g id="Group_2">
+<path id="Vector_5" d="M-20 220C150 230 300 200 640 225" stroke-width="6" stroke="#EDE5D3"/>
+<path id="Vector_6" d="M310 -20C320 160 300 300 320 480" stroke-width="6" stroke="#EDE5D3"/>
+</g>
+<path id="Vector_7" d="M0 400C100 380 200 383.333 300 410C400 436.667 500 430 600 390V460H0V400Z" fill="#ECE6DA"/>
+</g>
+<defs>
+<clipPath id="clip0_0_478">
+<rect width="600" height="460" fill="white"/>
+</clipPath>
+</defs>
+</svg>

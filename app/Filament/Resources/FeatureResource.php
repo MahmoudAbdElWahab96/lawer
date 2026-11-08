@@ -4,16 +4,17 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FeatureResource\Pages;
 use App\Models\Feature;
+use Filament\Actions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Actions;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class FeatureResource extends Resource
 {
@@ -25,9 +26,14 @@ class FeatureResource extends Resource
 
     protected static ?string $modelLabel = 'ميزة';
 
-    protected static ?string $pluralModelLabel = 'مميزات المكتب — لماذا تختارنا';
+    protected static ?string $pluralModelLabel = 'مميزات المكتب (لماذا تختارنا)';
 
     protected static ?int $navigationSort = 2;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -78,7 +84,7 @@ class FeatureResource extends Resource
                     ->wrap(),
                 Tables\Columns\TextColumn::make('text')
                     ->label('الشرح')
-                    ->state(fn (Feature $record) => \Illuminate\Support\Str::limit($record->t('text'), 60))
+                    ->state(fn (Feature $record) => Str::limit($record->t('text'), 60))
                     ->wrap()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('sort_order')
@@ -103,7 +109,7 @@ class FeatureResource extends Resource
                 ]),
             ])
             ->emptyStateHeading('لا توجد مميزات بعد')
-            ->emptyStateDescription('أضف ما يميز مكتبك — تظهر في قسم «لماذا تختارنا»');
+            ->emptyStateDescription('أضف ما يميز مكتبك لتظهر في قسم «لماذا تختارنا»');
     }
 
     public static function getPages(): array

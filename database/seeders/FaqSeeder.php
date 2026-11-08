@@ -13,65 +13,74 @@ class FaqSeeder extends Seeder
             [
                 'question' => [
                     'ar' => 'هل الاستشارة الأولى مجانية؟',
-                    'en' => 'Is the first consultation free?',
+                    'en' => 'Is the initial consultation free?',
                 ],
                 'answer' => [
-                    'ar' => 'الاستشارة الأولى عبر الموقع أو الهاتف مجانية تمامًا، وفيها نحدد موقفك القانوني بشكل مبدئي وخطة العمل المتوقعة. الاجتماع التفصيلي في المكتب يكون بمقابل يُتفق عليه مسبقًا.',
-                    'en' => 'The first consultation via the website or phone is completely free, where we assess your legal position and expected plan of action. A detailed in-office meeting is subject to a pre-agreed fee.',
+                    'ar' => 'نحدد معك جلسة استماع أولية لفهم الأوراق وموقف الملف بدقة. رسوم الجلسة تكون محددة مسبقاً وتُخصم بالكامل من إجمالي أتعاب القضية عند الاتفاق على تولي الملف.',
+                    'en' => 'We schedule an initial review session to examine your documents and legal position. The consultation fee is stated upfront and is fully credited toward the case retainer upon agreement.',
                 ],
                 'sort_order' => 1,
             ],
             [
                 'question' => [
-                    'ar' => 'كم تستغرق القضية عادة؟',
-                    'en' => 'How long does a case usually take?',
+                    'ar' => 'هل معلوماتي سرية؟',
+                    'en' => 'Are my details and files kept confidential?',
                 ],
                 'answer' => [
-                    'ar' => 'المدة تختلف حسب نوع القضية ودرجات التقاضي: قضايا الأحوال الشخصية قد تستغرق من 6 أشهر إلى سنتين، والقضايا التجارية والجنائية تختلف حسب تعقيد الملف. نلتزم بإبلاغك بجدول زمني واقعي من البداية.',
-                    'en' => 'Duration varies by case type and litigation level: personal status cases may take 6 months to 2 years, while commercial and criminal cases depend on complexity. We commit to a realistic timeline from the start.',
+                    'ar' => 'السرية المطلقة هي التزامنا الأول: كل ما تتداوله معنا من مستندات وأسرار محفوظ بسرية تامة طبقاً لقانون المحاماة وأخلاقيات المهنة من أول مكالمة وحتى بعد صدور الحكم.',
+                    'en' => 'Absolute confidentiality is our highest commitment. All discussions and documents are strictly protected under legal professional privilege from day one.',
                 ],
                 'sort_order' => 2,
             ],
             [
                 'question' => [
-                    'ar' => 'كيف يتم تحديد الأتعاب؟',
-                    'en' => 'How are fees determined?',
+                    'ar' => 'ما المستندات المطلوبة في أول زيارة؟',
+                    'en' => 'What documents are required for the first visit?',
                 ],
                 'answer' => [
-                    'ar' => 'الأتعاب تُحدد بعد دراسة القضية وتُوضح كتابةً قبل بدء العمل، وقد تكون مقطوعة أو بالنسبة من قيمة المطالبة حسب نوع القضية. لا توجد أي رسوم مفاجئة.',
-                    'en' => 'Fees are set after studying the case and confirmed in writing before work begins — either a flat fee or a percentage of the claim depending on the case type. No surprise charges.',
+                    'ar' => 'بطاقة الرقم القومي سارية، وصور كافة المستندات، العقود، المحاضر، أو الإنذارات المتعلقة بالنزاع. لا يُشترط إحضار الأصول في الجلسة الأولى.',
+                    'en' => 'A valid ID card along with copies of relevant contracts, notices, or official reports. Original documents are not required during the preliminary meeting.',
                 ],
                 'sort_order' => 3,
             ],
             [
                 'question' => [
-                    'ar' => 'هل معلوماتي وبياناتي محفوظة بسرية؟',
-                    'en' => 'Is my information kept confidential?',
+                    'ar' => 'هل يمكن الاستشارة أونلاين؟',
+                    'en' => 'Can consultations be conducted online?',
                 ],
                 'answer' => [
-                    'ar' => 'السرية التامة التزام قانوني وأخلاقي علينا. كل ما تشاركه مع المكتب من بيانات ومستندات لا يُفصح عنه لأي طرف إلا بأمر قضائي وبعلمك.',
-                    'en' => 'Complete confidentiality is our legal and ethical duty. Any data or documents you share is never disclosed to any party except by court order and with your knowledge.',
+                    'ar' => 'نعم، نقدم استشارات قانونية مخصصة عبر الهاتف، أو مكالمة فيديو، أو عبر واتساب، خاصة للموكلين خارج محافظة الغربية أو المقيمين بالخارج.',
+                    'en' => 'Yes, we provide direct consultations via phone, video call, or WhatsApp, especially for clients located outside Gharbia or abroad.',
                 ],
                 'sort_order' => 4,
             ],
             [
                 'question' => [
-                    'ar' => 'هل تتابعون القضايا في المحافظات الأخرى؟',
-                    'en' => 'Do you handle cases in other governorates?',
+                    'ar' => 'كيف تُحدد الأتعاب؟',
+                    'en' => 'How are legal fees calculated?',
                 ],
                 'answer' => [
-                    'ar' => 'نعم، لدينا شبكة مراسلين تغطي محاكم الجمهورية، ونمثل عملاءنا أمام المحاكم الاقتصادية ومحكمة النقض ومجلس الدولة.',
-                    'en' => 'Yes, we have a correspondents network covering courts nationwide, and we represent clients before economic courts, the Court of Cassation, and the Council of State.',
+                    'ar' => 'نعتمد مبدأ الشفافية: نحدد الأتعاب بعد دراسة الملف بدقة ونثبتها في اتفاق مكتوب ومحدد مع جدول دفعات ميسرة وفق مراحل الإجراءات دون أي رسوم مفاجئة.',
+                    'en' => 'We follow total transparency: fees are determined after reviewing the case files, agreed in writing, and structured in flexible milestones without unexpected costs.',
                 ],
                 'sort_order' => 5,
             ],
+            [
+                'question' => [
+                    'ar' => 'كم تستغرق القضية؟',
+                    'en' => 'How long does a lawsuit take?',
+                ],
+                'answer' => [
+                    'ar' => 'تختلف المدة الزمنية بحسب طبيعة النزاع ودرجة المحكمة، لكننا نضع جدولاً زمنياً تقديرياً لكل مرحلة ونطلعك دورياً على كل تطور أولاً بأول.',
+                    'en' => 'Case duration varies according to dispute complexity and court schedules; however, we provide a projected timeline and keep you updated at each milestone.',
+                ],
+                'sort_order' => 6,
+            ],
         ];
 
+        Faq::query()->delete();
         foreach ($items as $item) {
-            Faq::query()->updateOrCreate(
-                ['question' => $item['question']],
-                $item + ['is_active' => true],
-            );
+            Faq::create($item);
         }
     }
 }

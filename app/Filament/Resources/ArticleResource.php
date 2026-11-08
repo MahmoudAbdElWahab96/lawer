@@ -4,19 +4,20 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Models\Article;
+use Filament\Actions;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\RichEditor;
-use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
-use Filament\Actions;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class ArticleResource extends Resource
 {
@@ -32,6 +33,11 @@ class ArticleResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -44,7 +50,7 @@ class ArticleResource extends Resource
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (string $operation, $state, callable $set) {
                             if ($operation === 'create' && filled($state)) {
-                                $set('slug', \Illuminate\Support\Str::slug(\Illuminate\Support\Str::transliterate($state)) ?? $set('slug'));
+                                $set('slug', Str::slug(Str::transliterate($state)) ?? $set('slug'));
                             }
                         }),
                     TextInput::make('title.en')
@@ -53,7 +59,7 @@ class ArticleResource extends Resource
                 ]),
                 Grid::make(2)->schema([
                     Textarea::make('excerpt.ar')
-                        ->label('مقدمة مختصرة (عربي) — تظهر في نتائج البحث')
+                        ->label('مقدمة مختصرة (عربي) تظهر في نتائج البحث')
                         ->rows(3)
                         ->maxLength(300),
                     Textarea::make('excerpt.en')
@@ -76,7 +82,7 @@ class ArticleResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->regex('/^[a-z0-9-]+$/')
-                        ->helperText('حروف إنجليزية صغيرة وأرقام وشرطات فقط — example-my-article')
+                        ->helperText('حروف إنجليزية صغيرة وأرقام فقط (مثال: example-my-article)')
                         ->maxLength(255),
                     FileUpload::make('cover_path')
                         ->label('صورة الغلاف')

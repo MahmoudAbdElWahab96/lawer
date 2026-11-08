@@ -65,7 +65,7 @@
 
     <div class="border-t border-brand-900">
         <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-brand-300 sm:flex-row sm:px-6 lg:px-8">
-            <p>© {{ date('Y') }} {{ $settings->t('lawyer_name') }} — {{ __('site.footer.rights') }}</p>
+            <p>© {{ date('Y') }} {{ $settings->t('lawyer_name') }} · {{ __('site.footer.rights') }}</p>
             <p>{{ __('site.hero.free_consultation') }}</p>
         </div>
     </div>

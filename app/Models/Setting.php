@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasLocalizedFields;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -35,8 +36,30 @@ class Setting extends Model
         'clients_count',
         'success_rate',
         'lawyers_count',
+        'bar_admission_year',
         'logo_path',
         'hero_image_path',
+        'practice_title',
+        'practice_subtitle',
+        'practice_banner_title',
+        'practice_banner_text',
+        'pledge_title',
+        'pledge_subtitle',
+        'pledge_sign_text',
+        'pledge_clauses',
+        'route_title',
+        'route_subtitle',
+        'route_stages',
+        'messages_title',
+        'messages_subtitle',
+        'messages_items',
+        'faq_title',
+        'faq_subtitle',
+        'booking_title',
+        'booking_subtitle',
+        'contact_title',
+        'contact_subtitle',
+        'footer_text',
         'seo_meta_title',
         'seo_meta_description',
         'seo_keywords',
@@ -61,6 +84,27 @@ class Setting extends Model
             'clients_count' => 'integer',
             'success_rate' => 'integer',
             'lawyers_count' => 'integer',
+            'practice_title' => 'array',
+            'practice_subtitle' => 'array',
+            'practice_banner_title' => 'array',
+            'practice_banner_text' => 'array',
+            'pledge_title' => 'array',
+            'pledge_subtitle' => 'array',
+            'pledge_sign_text' => 'array',
+            'pledge_clauses' => 'array',
+            'route_title' => 'array',
+            'route_subtitle' => 'array',
+            'route_stages' => 'array',
+            'messages_title' => 'array',
+            'messages_subtitle' => 'array',
+            'messages_items' => 'array',
+            'faq_title' => 'array',
+            'faq_subtitle' => 'array',
+            'booking_title' => 'array',
+            'booking_subtitle' => 'array',
+            'contact_title' => 'array',
+            'contact_subtitle' => 'array',
+            'footer_text' => 'array',
             'seo_meta_title' => 'array',
             'seo_meta_description' => 'array',
             'seo_keywords' => 'array',
@@ -75,7 +119,25 @@ class Setting extends Model
 
     public static function findOrNew(): self
     {
-        return static::query()->first() ?? new static();
+        return static::query()->first() ?? new static;
+    }
+
+    public static function formatNumber(int|string|null $number, ?string $locale = null): string
+    {
+        if ($number === null || $number === '') {
+            return '';
+        }
+
+        $locale = $locale ?: app()->getLocale();
+
+        if ($locale !== 'ar') {
+            return (string) $number;
+        }
+
+        $western = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        $eastern = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+        return str_replace($western, $eastern, (string) $number);
     }
 
     public function whatsappLink(): ?string
@@ -84,7 +146,7 @@ class Setting extends Model
             return null;
         }
 
-        return 'https://wa.me/' . preg_replace('/[^0-9]/', '', $this->whatsapp);
+        return 'https://wa.me/'.preg_replace('/[^0-9]/', '', $this->whatsapp);
     }
 
     public function socialLinks(): array
@@ -96,5 +158,76 @@ class Setting extends Model
             'x' => $this->x_url,
             'youtube' => $this->youtube,
         ]);
+    }
+
+    public function mapOpenUrl(): string
+    {
+        $url = $this->map_embed_url;
+
+        if ($url && filter_var($url, FILTER_VALIDATE_URL) && ! str_contains($url, '/maps/embed')) {
+            return $url;
+        }
+
+        $address = $this->t('address') ?: '27 ص، حدائق الاهرام، الجيزة، مصر';
+
+        return 'https://www.google.com/maps/search/?api=1&query='.urlencode($address);
+    }
+
+    /**
+     * Whether the map is the OpenStreetMap fallback rather than an embed pasted from Google Maps.
+     */
+    public function usesFallbackMap(): bool
+    {
+        $url = (string) $this->map_embed_url;
+
+        return ! preg_match('/src=["\']([^"\']+)["\']/', $url) && ! str_contains($url, '/maps/embed');
+    }
+
+    public function mapEmbedSrc(): string
+    {
+        $url = $this->map_embed_url;
+
+        // 1. If an <iframe> tag was pasted, extract src
+        if ($url && preg_match('/src=["\']([^"\']+)["\']/', $url, $matches)) {
+            return $matches[1];
+        }
+
+        // 2. If it is already a valid embed URL
+        if ($url && str_contains($url, '/maps/embed')) {
+            return $url;
+        }
+
+        // 3. Fallback to OpenStreetMap; the landing page draws its own pin at the center
+        $lat = 29.9484375;
+        $lng = 31.0974375;
+
+        if ($url && (preg_match('/!3d(-?[0-9.]+)!4d(-?[0-9.]+)/', $url, $matches) || preg_match('/@(-?[0-9.]+),(-?[0-9.]+)/', $url, $matches))) {
+            $lat = (float) $matches[1];
+            $lng = (float) $matches[2];
+        }
+
+        $bboxLeft = $lng - 0.020;
+        $bboxBottom = $lat - 0.014;
+        $bboxRight = $lng + 0.020;
+        $bboxTop = $lat + 0.014;
+
+        return "https://www.openstreetmap.org/export/embed.html?bbox={$bboxLeft}%2C{$bboxBottom}%2C{$bboxRight}%2C{$bboxTop}&layer=mapnik";
+    }
+
+    protected function googleVerification(): Attribute
+    {
+        return Attribute::make(
+            set: function (?string $value): ?string {
+                if (! $value) {
+                    return null;
+                }
+
+                if (preg_match('/content=["\']([^"\']+)["\']/', $value, $matches)) {
+                    return $matches[1];
+                }
+
+                return trim(strip_tags($value));
+            }
+        );
     }
 }

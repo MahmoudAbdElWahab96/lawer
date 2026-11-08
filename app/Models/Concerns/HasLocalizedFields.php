@@ -2,7 +2,6 @@
 
 namespace App\Models\Concerns;
 
-
 /**
  * حقول محتوى ثنائية اللغة (ar/en) مخزنة كأعمدة JSON.
  * الفورم في الداشبورد يحرر field.ar و field.en،

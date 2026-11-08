@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Settings;
 use App\Filament\Widgets\Stats;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -27,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
+            ->favicon(asset('favicon-32.png').'?v=2')
             ->path('admin')
             ->login()
             ->brandName('إدارة الموقع')

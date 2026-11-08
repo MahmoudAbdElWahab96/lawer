@@ -5,58 +5,88 @@
 @source '../../resources/views/**/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
-/*
- * الهوية البصرية الافتراضية (placeholder) —
- * تتغير بالكامل لما التصميم النهائي يوصل.
- * كحلي غامق (brand) + ذهبي (gold).
- */
 @theme {
-    --font-sans: 'Cairo', 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Noto Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Amiri', serif;
+    --font-heading: 'Amiri', serif;
+    --font-ruqaa: 'Aref Ruqaa', cursive, serif;
 
-    --color-brand-50: oklch(0.97 0.014 252);
-    --color-brand-100: oklch(0.93 0.03 252);
-    --color-brand-200: oklch(0.86 0.06 253);
-    --color-brand-300: oklch(0.77 0.09 254);
-    --color-brand-400: oklch(0.66 0.12 257);
-    --color-brand-500: oklch(0.55 0.16 260);
-    --color-brand-600: oklch(0.47 0.17 262);
-    --color-brand-700: oklch(0.39 0.15 263);
-    --color-brand-800: oklch(0.32 0.12 264);
-    --color-brand-900: oklch(0.25 0.09 264);
-    --color-brand-950: oklch(0.16 0.06 265);
+    --color-paper: #f7f3ea;
+    --color-paper-light: #fdfbf7;
+    --color-paper-dark: #ede5d3;
+    --color-paper-border: #e4ded0;
 
-    --color-gold-50: oklch(0.98 0.02 95);
-    --color-gold-100: oklch(0.95 0.05 95);
-    --color-gold-200: oklch(0.9 0.09 95);
-    --color-gold-300: oklch(0.84 0.13 96);
-    --color-gold-400: oklch(0.78 0.16 97);
-    --color-gold-500: oklch(0.72 0.17 98);
-    --color-gold-600: oklch(0.63 0.15 99);
-    --color-gold-700: oklch(0.53 0.12 99);
-    --color-gold-800: oklch(0.44 0.1 100);
-    --color-gold-900: oklch(0.36 0.08 100);
+    --color-gold: #cfaa62;
+    --color-gold-light: #e3c27f;
+    --color-gold-hover: #bd974d;
+    --color-gold-ink: #7a5c24;
+
+    --color-dark-card: #2b2724;
+    --color-dark-surface: #221f1c;
+    --color-dark-deep: #1c1a17;
+    --color-dark-black: #0f0e0c;
+
+    --color-text-on-dark: #e6e0d4;
+    --color-text-muted-dark: #aba395;
+    --color-text-dim-dark: #8f877a;
+
+    --color-text-primary: #161412;
+    --color-text-muted: #6b645a;
 }
 
 html {
     scroll-behavior: smooth;
+    background-color: #f7f3ea;
+}
+
+/* زرار البيل التفاعلي — Hover: السهم بيلف 45 درجة والمسافة بتزيد مع تغيير لون الخلفية */
+.pill-btn {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pill-btn:hover {
+    gap: 16px !important;
+    background-color: #bd974d !important;
+}
+.pill-btn .pill-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pill-btn:hover .pill-arrow {
+    transform: rotate(45deg);
+}
+
+/* كارت مجالات الممارسة: Default & Hover (تطابق تام مع ديزاين Figma) */
+.practice-card {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.practice-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 44px 0 rgba(28, 26, 23, 0.12) !important;
+    border-color: #1c1a17 !important;
+}
+.practice-card .card-arrow {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.practice-card:hover .card-arrow {
+    background-color: #cfaa62 !important;
+    border-color: #cfaa62 !important;
+    color: #0f0e0c !important;
 }
 
 /* نص المقالات القادم من RichEditor */
 .prose-legal :where(h2) {
-    @apply mt-8 mb-3 text-2xl font-bold text-brand-900;
+    @apply mt-8 mb-3 text-2xl font-bold text-dark-deep font-serif;
 }
 
 .prose-legal :where(h3) {
-    @apply mt-6 mb-2 text-xl font-semibold text-brand-900;
+    @apply mt-6 mb-2 text-xl font-semibold text-dark-deep font-serif;
 }
 
 .prose-legal :where(p) {
-    @apply mb-4 leading-8 text-gray-700;
+    @apply mb-4 leading-8 text-text-muted;
 }
 
 .prose-legal :where(strong) {
-    @apply font-semibold text-brand-900;
+    @apply font-semibold text-dark-deep;
 }
 
 .prose-legal :where(ul) {

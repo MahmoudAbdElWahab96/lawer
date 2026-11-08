@@ -15,11 +15,13 @@ class ContactMessageResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-inbox';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'الرسائل';
+    protected static \UnitEnum|null|string $navigationGroup = 'الاستشارات';
 
-    protected static ?string $modelLabel = 'رسالة';
+    protected static ?string $modelLabel = 'طلب استشارة';
 
-    protected static ?string $pluralModelLabel = 'رسائل الاستشارات';
+    protected static ?string $pluralModelLabel = 'طلبات الاستشارة';
+
+    protected static ?string $navigationLabel = 'طلبات الاستشارة';
 
     protected static ?int $navigationSort = 1;
 

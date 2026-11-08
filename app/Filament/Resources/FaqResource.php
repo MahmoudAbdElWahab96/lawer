@@ -4,14 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FaqResource\Pages;
 use App\Models\Faq;
-use Filament\Schemas\Components\Grid;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
 use Filament\Actions;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class FaqResource extends Resource
 {
@@ -19,13 +21,13 @@ class FaqResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-question-mark-circle';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'المحتوى';
+    protected static \UnitEnum|null|string $navigationGroup = 'محتوى الموقع';
 
     protected static ?string $modelLabel = 'سؤال شائع';
 
     protected static ?string $pluralModelLabel = 'الأسئلة الشائعة';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {
@@ -50,7 +52,7 @@ class FaqResource extends Resource
                         ->rows(5),
                 ]),
                 Grid::make(2)->schema([
-                    \Filament\Forms\Components\TextInput::make('sort_order')
+                    TextInput::make('sort_order')
                         ->label('ترتيب العرض')
                         ->numeric()
                         ->default(0),
@@ -67,7 +69,7 @@ class FaqResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('question')
                     ->label('السؤال')
-                    ->state(fn (Faq $record) => \Illuminate\Support\Str::limit($record->t('question'), 80))
+                    ->state(fn (Faq $record) => Str::limit($record->t('question'), 80))
                     ->searchable(query: fn ($query, $search) => $query->where('question->ar', 'like', "%{$search}%")->orWhere('question->en', 'like', "%{$search}%"))
                     ->wrap(),
                 Tables\Columns\TextColumn::make('sort_order')
@@ -93,7 +95,7 @@ class FaqResource extends Resource
                 ]),
             ])
             ->emptyStateHeading('لا توجد أسئلة بعد')
-            ->emptyStateDescription('أضف الأسئلة الشائعة — تظهر في الموقع وتُحَسِّن الظهور في محركات البحث');
+            ->emptyStateDescription('أضف الأسئلة الشائعة لتظهر في الموقع وتُحَسِّن الظهور في محركات البحث');
     }
 
     public static function getPages(): array

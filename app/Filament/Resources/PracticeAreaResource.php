@@ -4,14 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PracticeAreaResource\Pages;
 use App\Models\PracticeArea;
-use Filament\Schemas\Components\Grid;
+use Filament\Actions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
-use Filament\Actions;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -21,7 +21,7 @@ class PracticeAreaResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-scale';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'المحتوى';
+    protected static \UnitEnum|null|string $navigationGroup = 'محتوى الموقع';
 
     protected static ?string $modelLabel = 'مجال ممارسة';
 
@@ -56,7 +56,7 @@ class PracticeAreaResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->regex('/^[a-z0-9-]+$/')
-                        ->helperText('يُستخدم في الروابط — حروف إنجليزية صغيرة وأرقام وشرطات فقط')
+                        ->helperText('يُستخدم في الروابط: حروف إنجليزية صغيرة وأرقام فقط')
                         ->maxLength(255),
                     Select::make('icon')
                         ->label('الأيقونة')
@@ -99,7 +99,7 @@ class PracticeAreaResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('sort_order')
                     ->label('الترتيب')
-                    -> sortable(),
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('ظاهر')
                     ->boolean(),

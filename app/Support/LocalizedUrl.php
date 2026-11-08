@@ -2,8 +2,6 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Facades\Route as RouteFacade;
-
 /**
  * توليد رابط الصفحة الحالية بلغة أخرى — للـ lang switcher و hreflang.
  */
@@ -24,6 +22,6 @@ class LocalizedUrl
             }
         }
 
-        return url('/' . $locale);
+        return url('/'.$locale);
     }
 }

@@ -4,15 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestimonialResource\Pages;
 use App\Models\Testimonial;
-use Filament\Schemas\Components\Grid;
+use Filament\Actions;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
-use Filament\Actions;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class TestimonialResource extends Resource
 {
@@ -27,6 +28,11 @@ class TestimonialResource extends Resource
     protected static ?string $pluralModelLabel = 'آراء العملاء';
 
     protected static ?int $navigationSort = 2;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -81,11 +87,11 @@ class TestimonialResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('content')
                     ->label('الرأي')
-                    ->state(fn (Testimonial $record) => \Illuminate\Support\Str::limit($record->t('content'), 60))
+                    ->state(fn (Testimonial $record) => Str::limit($record->t('content'), 60))
                     ->wrap(),
                 Tables\Columns\TextColumn::make('rating')
                     ->label('التقييم')
-                    ->formatStateUsing(fn (int $state) => str_repeat('★', $state) . str_repeat('☆', 5 - $state)),
+                    ->formatStateUsing(fn (int $state) => str_repeat('★', $state).str_repeat('☆', 5 - $state)),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('ظاهر')
                     ->boolean(),

@@ -28,20 +28,20 @@ class SitemapController
             }
         }
 
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.PHP_EOL;
 
         if ($settings->seo_robots_index) {
             foreach ($urls as [$loc, $freq, $priority]) {
-                $xml .= '  <url>' . PHP_EOL;
-                $xml .= '    <loc>' . htmlspecialchars($loc, ENT_XML1) . '</loc>' . PHP_EOL;
-                $xml .= "    <changefreq>{$freq}</changefreq>" . PHP_EOL;
-                $xml .= "    <priority>{$priority}</priority>" . PHP_EOL;
-                $xml .= '  </url>' . PHP_EOL;
+                $xml .= '  <url>'.PHP_EOL;
+                $xml .= '    <loc>'.htmlspecialchars($loc, ENT_XML1).'</loc>'.PHP_EOL;
+                $xml .= "    <changefreq>{$freq}</changefreq>".PHP_EOL;
+                $xml .= "    <priority>{$priority}</priority>".PHP_EOL;
+                $xml .= '  </url>'.PHP_EOL;
             }
         }
 
-        $xml .= '</urlset>' . PHP_EOL;
+        $xml .= '</urlset>'.PHP_EOL;
 
         return response($xml, 200)->header('Content-Type', 'application/xml; charset=UTF-8');
     }

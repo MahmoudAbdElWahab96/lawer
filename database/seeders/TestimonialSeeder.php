@@ -12,7 +12,7 @@ class TestimonialSeeder extends Seeder
         $items = [
             [
                 'client_name' => 'م. خالد سمير',
-                'client_role' => ['ar' => 'رجل أعمال — قضية تجارية', 'en' => 'Businessman — commercial case'],
+                'client_role' => ['ar' => 'رجل أعمال (قضية تجارية)', 'en' => 'Businessman (commercial case)'],
                 'content' => [
                     'ar' => 'تابع قضية تجارية معقدة استمرت أكثر من سنة، وكان الشرح في كل جلسة واضحًا والالتزام بالمواعيد ممتازًا. النتيجة كانت أفضل مما توقعت.',
                     'en' => 'He handled a complex commercial case that lasted over a year. Every session was explained clearly and deadlines were strictly met. The outcome exceeded my expectations.',

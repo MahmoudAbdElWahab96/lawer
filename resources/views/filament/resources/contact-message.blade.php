@@ -13,12 +13,12 @@
             @if ($record->email)
                 <a href="mailto:{{ $record->email }}" class="text-base font-semibold text-primary-600 dark:text-primary-400" dir="ltr">{{ $record->email }}</a>
             @else
-                <p class="text-base text-gray-400">—</p>
+                <p class="text-base text-gray-400">غير متوفر</p>
             @endif
         </div>
         <div>
             <p class="text-sm font-medium text-gray-500 dark:text-gray-400">تاريخ الإرسال</p>
-            <p class="text-base font-semibold">{{ $record->created_at->format('Y/m/d — h:i A') }}</p>
+            <p class="text-base font-semibold">{{ $record->created_at->format('Y/m/d h:i A') }}</p>
         </div>
         <div class="sm:col-span-2">
             <p class="text-sm font-medium text-gray-500 dark:text-gray-400">نوع الاستشارة</p>

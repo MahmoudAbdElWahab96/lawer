@@ -2,8 +2,9 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Article;
+use App\Filament\Resources\ContactMessageResource;
 use App\Models\ContactMessage;
+use App\Models\Faq;
 use App\Models\PracticeArea;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -15,21 +16,23 @@ class Stats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('رسائل جديدة', ContactMessage::query()->where('is_read', false)->count())
-                ->description('من فورم الاستشارة')
+            Stat::make('طلبات جديدة', ContactMessage::query()->where('is_read', false)->count())
+                ->description('من فورم حجز الاستشارة')
                 ->descriptionIcon('heroicon-m-inbox')
                 ->color(ContactMessage::query()->where('is_read', false)->exists() ? 'danger' : 'gray')
-                ->url(\App\Filament\Resources\ContactMessageResource::getUrl()),
-            Stat::make('إجمالي الرسائل', ContactMessage::query()->count())
+                ->url(ContactMessageResource::getUrl()),
+            Stat::make('إجمالي الطلبات', ContactMessage::query()->count())
+                ->description('جميع الاستشارات المستلمة')
                 ->descriptionIcon('heroicon-m-envelope')
                 ->color('info'),
-            Stat::make('مقالات منشورة', Article::query()->where('is_published', true)->count())
-                ->description('من إجمالي ' . Article::query()->count())
-                ->descriptionIcon('heroicon-m-newspaper')
-                ->color('success'),
             Stat::make('مجالات الممارسة', PracticeArea::query()->where('is_active', true)->count())
+                ->description('المعروضة في صفحة الموقع')
                 ->descriptionIcon('heroicon-m-scale')
                 ->color('warning'),
+            Stat::make('الأسئلة الشائعة', Faq::query()->where('is_active', true)->count())
+                ->description('المعروضة في قسم الأسئلة')
+                ->descriptionIcon('heroicon-m-question-mark-circle')
+                ->color('success'),
         ];
     }
 }

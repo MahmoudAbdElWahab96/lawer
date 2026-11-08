@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('site.blog.title') . ' — ' . $settings->t('lawyer_name'))
+@section('title', __('site.blog.title') . ' | ' . $settings->t('lawyer_name'))
 
 @section('content')
 

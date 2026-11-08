@@ -11,11 +11,11 @@ class Bilingual
 {
     public static function ar(Field $field, string $label): Field
     {
-        return $field->label($label . ' (عربي)');
+        return $field->label($label.' (عربي)');
     }
 
     public static function en(Field $field, string $label): Field
     {
-        return $field->label($label . ' (English)');
+        return $field->label($label.' (English)');
     }
 }

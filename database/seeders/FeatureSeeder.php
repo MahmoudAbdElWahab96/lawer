@@ -28,8 +28,8 @@ class FeatureSeeder extends Seeder
                     'en' => 'A personal approach and strategy for every client',
                 ],
                 'text' => [
-                    'ar' => 'لا توجد خطة دفاع واحدة تصلح للجميع — ندرس ملفك بعمق ونرسم استراتيجية مخصصة لظروفك وأهدافك.',
-                    'en' => 'No single defense plan fits everyone — we study your file in depth and craft a strategy tailored to your circumstances and goals.',
+                    'ar' => 'لا توجد خطة دفاع واحدة تصلح للجميع، ندرس ملفك بعمق ونرسم استراتيجية مخصصة لظروفك وأهدافك.',
+                    'en' => 'No single defense plan fits everyone, we study your file in depth and craft a strategy tailored to your circumstances and goals.',
                 ],
                 'icon' => 'strategy',
                 'sort_order' => 2,

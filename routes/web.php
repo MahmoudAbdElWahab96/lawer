@@ -5,6 +5,7 @@ use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\SitemapController;
 use App\Http\Middleware\SetLocale;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/ar', 302);
@@ -24,14 +25,14 @@ Route::prefix('{locale}')
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 Route::get('/robots.txt', function () {
-    $settings = \App\Models\Setting::findOrNew();
+    $settings = Setting::findOrNew();
 
     $lines = $settings->seo_robots_index
         ? ['User-agent: *', 'Disallow: /admin', 'Allow: /']
         : ['User-agent: *', 'Disallow: /'];
 
     $lines[] = '';
-    $lines[] = 'Sitemap: ' . route('sitemap');
+    $lines[] = 'Sitemap: '.route('sitemap');
 
     return response(implode(PHP_EOL, $lines), 200)->header('Content-Type', 'text/plain; charset=UTF-8');
 })->name('robots');
