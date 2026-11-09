@@ -17,6 +17,7 @@
         ['url' => $settings->instagram, 'label' => $locale === 'ar' ? 'إنستجرام' : 'Instagram'],
         ['url' => $settings->youtube, 'label' => $locale === 'ar' ? 'يوتيوب' : 'YouTube'],
         ['url' => $settings->linkedin, 'label' => $locale === 'ar' ? 'لينكدإن' : 'LinkedIn'],
+        ['url' => $settings->tiktok, 'label' => $locale === 'ar' ? 'تيك توك' : 'TikTok'],
         ['url' => $settings->x_url, 'label' => 'X'],
     ])->filter(fn (array $social): bool => filled($social['url']));
     $bookingIcons = ['d6be1.svg' => 'booking-family.svg', '8ee21.svg' => 'a2123.svg', '3d433.svg' => '1b404.svg', 'fd282.svg' => 'ea50c.svg', '630cd.svg' => 'aded1.svg', '2fdca.svg' => '0abef.svg'];
@@ -35,7 +36,7 @@
     {{-- 1. HERO SECTION                                                --}}
     {{-- ============================================================== --}}
     <section id="hero" class="p-2 sm:p-4 lg:p-4 max-w-[1440px] mx-auto">
-        <div class="relative bg-dark-card rounded-[28px] overflow-hidden min-h-[900px] lg:h-[948px] text-paper flex flex-col justify-between p-6 sm:p-8 lg:p-12 xl:px-11 xl:pt-3 xl:pb-0">
+        <div class="relative bg-dark-card rounded-[28px] overflow-hidden xl:h-[948px] text-paper flex flex-col justify-between p-6 sm:p-8 lg:p-12 xl:px-11 xl:pt-3 xl:pb-0">
 
             @php
                 $heroImgSrc = asset('images/landing/497c8.png');
@@ -52,53 +53,74 @@
                     ['text' => __('site.hero.guarantee_2'), 'icon' => 'a0fa9.svg', 'rotation' => '-rotate-4'],
                     ['text' => __('site.hero.guarantee_1'), 'icon' => '776ff.svg', 'rotation' => 'rotate-6'],
                 ];
+                $heroNavLinks = [
+                    ['href' => '#hero', 'label' => __('site.nav.home')],
+                    ['href' => '#about', 'label' => __('site.nav.about')],
+                    ['href' => '#practice', 'label' => __('site.nav.services')],
+                    ['href' => '#route', 'label' => __('site.nav.route')],
+                    ['href' => '#faq', 'label' => __('site.nav.faq')],
+                    ['href' => '#contact', 'label' => __('site.nav.contact')],
+                ];
                 $heroStats = [
                     ['value' => $settings->years_experience ?: 15, 'label' => __('site.hero.years_exp')],
                     ['value' => $settings->clients_count ?: 2000, 'label' => __('site.hero.clients_trusted')],
                     ['value' => $settings->lawyers_count ?: 20, 'label' => __('site.hero.lawyers_team')],
                 ];
             @endphp
-            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="hidden xl:block absolute inset-0 pointer-events-none overflow-hidden">
                 <img src="{{ $heroImgSrc }}"
                      alt="{{ $lawyerName }}"
-                     class="hidden md:block absolute {{ $isRtl ? 'left-2 xl:left-[78px]' : 'right-2 xl:right-[78px] -scale-x-100' }} top-10 xl:top-[41px] h-[680px] lg:h-[764px] xl:w-[509px] object-contain xl:object-cover object-bottom">
+                     class="absolute {{ $isRtl ? 'left-[78px]' : 'right-[78px] -scale-x-100' }} top-[41px] h-[764px] w-[509px] object-cover object-bottom">
 
                 <div class="absolute inset-y-0 {{ $isRtl ? 'left-0' : 'right-0' }} w-[56%] bg-dark-card opacity-28 mix-blend-color"></div>
-                <div class="hidden md:block absolute inset-y-0 {{ $isRtl ? 'left-0 bg-[linear-gradient(to_right,rgba(43,39,36,0)_45%,rgba(43,39,36,0.52)_75%,rgba(43,39,36,0.75))]' : 'right-0 bg-[linear-gradient(to_left,rgba(43,39,36,0)_45%,rgba(43,39,36,0.52)_75%,rgba(43,39,36,0.75))]' }} w-[56%]"></div>
-                <div class="hidden md:block absolute inset-y-0 {{ $isRtl ? 'left-0 bg-[linear-gradient(to_right,rgba(43,39,36,0.64),rgba(43,39,36,0.26)_45%,rgba(43,39,36,0))]' : 'right-0 bg-[linear-gradient(to_left,rgba(43,39,36,0.64),rgba(43,39,36,0.26)_45%,rgba(43,39,36,0))]' }} w-[22.4%]"></div>
-                <div class="absolute inset-y-0 {{ $isRtl ? 'left-0' : 'right-0' }} w-full md:w-[56%] bg-[linear-gradient(to_bottom,rgba(43,39,36,0)_66%,rgba(43,39,36,0.75)_84%)]"></div>
+                <div class="absolute inset-y-0 {{ $isRtl ? 'left-0 bg-[linear-gradient(to_right,rgba(43,39,36,0)_45%,rgba(43,39,36,0.52)_75%,rgba(43,39,36,0.75))]' : 'right-0 bg-[linear-gradient(to_left,rgba(43,39,36,0)_45%,rgba(43,39,36,0.52)_75%,rgba(43,39,36,0.75))]' }} w-[56%]"></div>
+                <div class="absolute inset-y-0 {{ $isRtl ? 'left-0 bg-[linear-gradient(to_right,rgba(43,39,36,0.64),rgba(43,39,36,0.26)_45%,rgba(43,39,36,0))]' : 'right-0 bg-[linear-gradient(to_left,rgba(43,39,36,0.64),rgba(43,39,36,0.26)_45%,rgba(43,39,36,0))]' }} w-[22.4%]"></div>
+                <div class="absolute inset-y-0 {{ $isRtl ? 'left-0' : 'right-0' }} w-[56%] bg-[linear-gradient(to_bottom,rgba(43,39,36,0)_66%,rgba(43,39,36,0.75)_84%)]"></div>
             </div>
 
-            <header class="relative z-30 flex items-center justify-between gap-4 w-full xl:h-16">
+            <header x-data="{ menuOpen: false }" @keydown.escape.window="menuOpen = false" class="relative z-30 flex items-center justify-between gap-4 w-full xl:h-16">
                 <div class="flex items-baseline gap-3 text-start">
-                    <span class="{{ $isRtl ? 'font-ruqaa text-[32px]' : 'font-serif font-bold text-2xl sm:text-3xl' }} text-gold leading-[1.5]">{{ $lawyerName }}</span>
+                    <span class="{{ $isRtl ? 'font-ruqaa text-[32px]' : 'font-serif font-bold text-2xl sm:text-3xl' }} text-gold leading-[1.5] whitespace-nowrap">{{ $lawyerName }}</span>
                     <span class="hidden sm:inline-block text-[13px] text-text-on-dark font-medium">{{ __('site.nav.badge') }}</span>
                 </div>
 
-                <nav class="hidden lg:flex items-center gap-1 backdrop-blur-[8px] bg-dark-surface border border-paper rounded-full px-2 py-1 text-[15px] leading-[1.7]">
-                    <a href="#hero" class="bg-paper text-dark-black font-bold rounded-full px-3 py-2">{{ __('site.nav.home') }}</a>
-                    <a href="#about" class="px-3 pt-2 pb-1 text-text-on-dark hover:text-white transition">{{ __('site.nav.about') }}</a>
-                    <a href="#practice" class="px-3 pt-2 pb-1 text-text-on-dark hover:text-white transition">{{ __('site.nav.services') }}</a>
-                    <a href="#route" class="px-3 pt-2 pb-1 text-text-on-dark hover:text-white transition">{{ __('site.nav.route') }}</a>
-                    <a href="#faq" class="px-3 pt-2 pb-1 text-text-on-dark hover:text-white transition">{{ __('site.nav.faq') }}</a>
-                    <a href="#contact" class="px-3 pt-2 pb-1 text-text-on-dark hover:text-white transition">{{ __('site.nav.contact') }}</a>
+                <nav class="hidden xl:flex items-center gap-1 whitespace-nowrap backdrop-blur-[8px] bg-dark-surface border border-paper rounded-full px-2 py-1 text-[15px] leading-[1.7]">
+                    @foreach($heroNavLinks as $navLink)
+                        <a href="{{ $navLink['href'] }}" class="{{ $loop->first ? 'bg-paper text-dark-black font-bold rounded-full px-3 py-2' : 'px-3 pt-2 pb-1 text-text-on-dark hover:text-white transition' }}">{{ $navLink['label'] }}</a>
+                    @endforeach
                     <a href="{{ \App\Support\LocalizedUrl::current($locale === 'ar' ? 'en' : 'ar') }}"
                        class="ms-1 px-3 py-1 rounded-full border border-paper/30 text-xs font-semibold hover:bg-paper/10 text-paper transition">{{ __('site.nav.switch_lang') }}</a>
                 </nav>
 
                 <div class="flex items-center gap-2">
                     <a href="{{ \App\Support\LocalizedUrl::current($locale === 'ar' ? 'en' : 'ar') }}"
-                       class="lg:hidden px-3 py-1.5 rounded-full border border-paper/30 text-xs font-semibold hover:bg-paper/10 text-paper transition">{{ $locale === 'ar' ? 'EN' : 'عربي' }}</a>
-                    <a href="#booking" class="bg-gold hover:bg-gold-hover text-dark-black rounded-full ps-6 pe-1.5 py-1.5 font-semibold text-[15px] inline-flex items-center gap-3 pill-btn transition-all">
+                       class="xl:hidden px-3 py-1.5 rounded-full border border-paper/30 text-xs font-semibold hover:bg-paper/10 text-paper transition">{{ $locale === 'ar' ? 'EN' : 'عربي' }}</a>
+                    <a href="#booking" class="hidden sm:inline-flex whitespace-nowrap bg-gold hover:bg-gold-hover text-dark-black rounded-full ps-6 pe-1.5 py-1.5 font-semibold text-[15px] items-center gap-3 pill-btn transition-all">
                         <span>{{ __('site.nav.book') }}</span>
                         <span class="bg-dark-surface size-10 rounded-full flex items-center justify-center pill-arrow transition-transform duration-300 {{ $isRtl ? '' : '-scale-x-100' }}">
                             <img src="{{ asset('images/landing/8a63c.svg') }}" alt="" class="size-4">
                         </span>
                     </a>
+                    <button type="button" @click="menuOpen = ! menuOpen" :aria-expanded="menuOpen" aria-label="{{ $locale === 'ar' ? 'القائمة' : 'Menu' }}"
+                            class="xl:hidden size-10 rounded-full border border-paper/30 text-paper flex items-center justify-center hover:bg-paper/10 transition">
+                        <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                            <path x-show="! menuOpen" d="M4 7h16M4 12h16M4 17h16"/>
+                            <path x-show="menuOpen" style="display: none;" d="M6 6l12 12M18 6L6 18"/>
+                        </svg>
+                    </button>
                 </div>
+
+                <nav x-show="menuOpen" x-transition @click.outside="menuOpen = false" style="display: none;"
+                     class="xl:hidden absolute top-full inset-x-0 mt-2 bg-dark-surface border border-paper/20 rounded-[20px] p-2 flex flex-col text-[15px] shadow-[0px_18px_40px_0px_rgba(15,14,12,0.45)]">
+                    @foreach($heroNavLinks as $navLink)
+                        <a href="{{ $navLink['href'] }}" @click="menuOpen = false" class="px-4 py-3 rounded-xl text-start text-text-on-dark hover:bg-paper/10 hover:text-white transition">{{ $navLink['label'] }}</a>
+                    @endforeach
+                    <a href="#booking" @click="menuOpen = false" class="sm:hidden mt-1 px-4 py-3 rounded-xl bg-gold text-dark-black font-semibold text-center">{{ __('site.nav.book') }}</a>
+                </nav>
             </header>
 
-            <div class="relative z-20 my-auto pt-10 pb-6 lg:py-0 flex flex-col items-start text-start gap-6 max-w-2xl xl:max-w-none xl:absolute xl:my-0 xl:top-[208px] xl:start-[152px]">
+            <div class="relative z-20 flex-1 flex flex-col md:flex-row md:justify-between md:gap-6 xl:contents">
+            <div class="relative z-20 md:flex-1 md:min-w-0 md:self-center pt-10 md:py-10 flex flex-col items-start text-start gap-6 xl:absolute xl:py-0 xl:top-[208px] xl:start-[152px]">
 
                 <div class="relative size-24 sm:size-[104px] opacity-92 -rotate-10 xl:absolute xl:-top-[118px] xl:-start-[26px]">
                     <img src="{{ asset('images/landing/88760.svg') }}" alt="" class="absolute inset-[4%] size-[92%]">
@@ -112,18 +134,18 @@
                     <span class="absolute inset-x-0 top-[59px] text-center font-medium text-[7.6px] leading-[1.5] text-gold">{{ __('site.hero.stamp_year') }}</span>
                 </div>
 
-                <h1 class="font-serif text-4xl sm:text-5xl {{ $isRtl ? 'lg:text-[76px]' : 'lg:text-[64px] xl:max-w-[680px]' }} font-bold text-paper leading-[1.28]">{!! $heroHeadlineHtml !!}</h1>
+                <h1 class="font-serif text-4xl sm:text-5xl {{ $isRtl ? 'lg:text-[60px] xl:text-[76px]' : 'lg:text-[50px] xl:text-[64px] xl:max-w-[680px]' }} font-bold text-paper leading-[1.28]">{!! $heroHeadlineHtml !!}</h1>
 
                 <p class="text-base sm:text-lg lg:text-[19px] text-text-on-dark leading-[1.8] max-w-[520px]">
                     {{ $settings->t('hero_subheadline') ?: ($locale === 'en' ? 'We listen to you first, then establish a written roadmap for your case in family, civil, commercial, and criminal law with full confidentiality.' : 'نستمع لك أولًا، ثم نضع لقضيتك خطة مكتوبة في الأسرة والمدني والتجاري والجنائي، وبسرية تامة حتى صدور الحكم.') }}
                 </p>
 
-                <div class="flex flex-wrap items-center gap-y-3 text-[15px] leading-[1.7] text-paper">
+                <div class="flex flex-col items-start gap-y-2 xl:flex-row xl:items-center text-[15px] leading-[1.7] text-paper">
                     @foreach($heroTicks as $tick)
                         @if(! $loop->first)
-                            <span class="hidden sm:block h-6 w-px bg-paper opacity-35"></span>
+                            <span class="hidden xl:block h-6 w-px bg-paper opacity-35"></span>
                         @endif
-                        <div class="flex items-center gap-3 {{ $loop->first ? 'pe-4' : ($loop->last ? 'ps-4' : 'px-4') }}">
+                        <div class="flex items-center gap-3 {{ $loop->first ? 'xl:pe-4' : ($loop->last ? 'xl:ps-4' : 'xl:px-4') }}">
                             <span class="size-12 flex items-center justify-center shrink-0">
                                 <img src="{{ asset('images/landing/'.$tick['icon']) }}" alt="" class="size-[53px] max-w-none {{ $tick['rotation'] }}">
                             </span>
@@ -144,7 +166,11 @@
                 </div>
             </div>
 
-            <div class="relative z-20 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 lg:-mx-12 lg:-mb-12 xl:-mx-11 xl:mb-0 mt-12 xl:mt-0 xl:h-[140px] bg-dark-surface border-t border-paper px-6 sm:px-10 xl:ps-[138px] xl:pe-[100px] py-6 xl:py-0 flex flex-col md:flex-row items-center justify-between gap-6">
+                <img src="{{ $heroImgSrc }}" alt="{{ $lawyerName }}"
+                     class="xl:hidden mt-8 md:mt-10 self-center md:self-end shrink-0 h-[430px] sm:h-[520px] md:h-[500px] lg:h-[620px] w-auto max-w-none object-contain object-bottom {{ $isRtl ? '' : '-scale-x-100' }}">
+            </div>
+
+            <div class="relative z-20 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 lg:-mx-12 lg:-mb-12 xl:-mx-11 xl:mb-0 xl:h-[140px] bg-dark-surface border-t border-paper px-6 sm:px-10 xl:ps-[138px] xl:pe-[100px] py-6 xl:py-0 flex flex-col lg:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-4 text-start">
                     <div class="relative size-14 shrink-0">
                         <img src="{{ asset('images/landing/77912.svg') }}" alt="" class="absolute inset-0.5 size-[52px]">
@@ -157,13 +183,13 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-around w-full md:w-auto text-center">
+                <div class="flex items-center justify-around w-full lg:w-auto text-center">
                     @foreach($heroStats as $stat)
                         @if(! $loop->first)
-                            <div class="h-[84px] w-px bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(247,242,235,0.3),rgba(255,255,255,0))]"></div>
+                            <div class="shrink-0 h-[84px] w-px bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(247,242,235,0.3),rgba(255,255,255,0))]"></div>
                         @endif
-                        <div class="flex flex-col items-center gap-0.5 px-3 sm:px-8 whitespace-nowrap">
-                            <div class="font-serif text-3xl sm:text-5xl lg:text-[60px] font-bold leading-[1.2] text-paper flex items-center justify-center">
+                        <div class="flex-1 lg:flex-none min-w-0 flex flex-col items-center gap-0.5 px-1.5 sm:px-4 lg:px-5 xl:px-8 lg:whitespace-nowrap">
+                            <div class="font-serif text-3xl sm:text-5xl xl:text-[60px] font-bold leading-[1.2] text-paper flex items-center justify-center">
                                 @if($isRtl)
                                     <span>{{ \App\Models\Setting::formatNumber($stat['value'], 'ar') }}</span><span class="text-gold">+</span>
                                 @else
@@ -353,23 +379,53 @@
                         $txt = is_array($clause['text'] ?? null) ? ($clause['text'][$locale] ?? $clause['text']['ar'] ?? '') : ($clause['text'] ?? '');
                     @endphp
                     <div class="py-8 border-b border-dark-deep/14 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-8 text-start">
-                        <div class="md:w-[150px] shrink-0 font-serif text-4xl sm:text-5xl lg:text-[56px] leading-none text-gold">{{ $ord }}</div>
-                        <div class="md:w-[300px] shrink-0 font-serif text-2xl lg:text-[28px] leading-[1.3] font-bold text-dark-deep">{{ $tit }}</div>
-                        <div class="md:w-[440px] text-base lg:text-lg leading-[1.75] text-dark-deep/72 whitespace-pre-line">{{ $txt }}</div>
+                        <div class="md:w-[120px] lg:w-[150px] shrink-0 font-serif text-4xl sm:text-5xl md:text-4xl lg:text-[56px] leading-none text-gold">{{ $ord }}</div>
+                        <div class="md:w-[210px] lg:w-[300px] shrink-0 font-serif text-2xl lg:text-[28px] leading-[1.3] font-bold text-dark-deep">{{ $tit }}</div>
+                        <div class="md:flex-1 md:min-w-0 lg:flex-none lg:w-[440px] text-base lg:text-lg leading-[1.75] text-dark-deep/72 whitespace-pre-line">{{ $txt }}</div>
                     </div>
                 @endforeach
             </div>
 
-            <div class="relative w-fit flex items-end pt-[200px]">
-                <div class="absolute top-[5px] {{ $isRtl ? 'left-[-14px]' : 'right-[-14px] -scale-x-100' }} w-[152px] h-[240px] pointer-events-none drop-shadow-[-12px_16px_20px_rgba(0,0,0,0.45)]">
-                    <div class="absolute inset-0 overflow-hidden">
-                        <img src="{{ asset('images/landing/23f8d.png') }}" alt="" class="absolute h-[184.23%] left-[-86.11%] max-w-none top-[-44.8%] w-[291.72%]">
+            {{-- Pledge End: Large Pen + Signature Line + "هذا ما نتعهد به لك" (Figma Layout) --}}
+            @if($isRtl)
+                {{-- RTL: pen on LEFT, line extends to RIGHT, text on far RIGHT --}}
+                {{-- pen image: 870×1370px, nib at bottom-left corner --}}
+                <div class="mt-8 relative h-[300px] sm:h-[360px] md:h-[400px] lg:h-[440px]">
+                    {{-- Pen: bottom-left of container --}}
+                    <div class="absolute left-0 bottom-[1px] w-[190px] sm:w-[220px] md:w-[250px] lg:w-[260px] pointer-events-none drop-shadow-[-8px_18px_20px_rgba(0,0,0,0.30)]">
+                        <img src="{{ asset('images/landing/pen-cropped.png') }}"
+                             alt="قلم التعهد"
+                             class="w-full h-auto object-contain">
+                    </div>
+                    {{-- Gold line + text: row-reverse so text is on RIGHT, line fills middle, spacer aligns start to nib tip --}}
+                    <div class="absolute bottom-0 inset-x-0 flex flex-row-reverse items-center">
+                        {{-- spacer on the LEFT so line starts at nib tip --}}
+                        <div class="shrink-0" style="width:80px"></div>
+                        {{-- Gold signature line --}}
+                        <div class="flex-1 h-[1.5px] bg-[#cfaa62]"></div>
+                        {{-- Text on the RIGHT --}}
+                        <p class="shrink-0 me-6 sm:me-8 font-ruqaa text-2xl sm:text-3xl lg:text-[36px] leading-[1.3] text-[#cfaa62] whitespace-nowrap">
+                            {{ $settings->t('pledge_sign_text') ?: __('site.pledge.sign_text') }}
+                        </p>
                     </div>
                 </div>
-                <p class="{{ $isRtl ? 'font-ruqaa' : 'font-serif italic' }} text-[30px] leading-[1.4] text-gold whitespace-nowrap">{{ $settings->t('pledge_sign_text') ?: __('site.pledge.sign_text') }}</p>
-                <div class="w-6 h-px"></div>
-                <div class="w-[120px] sm:w-[200px] h-px bg-gold/55"></div>
-            </div>
+            @else
+                {{-- LTR: pen on RIGHT (flipped), line extends to LEFT, text on far LEFT --}}
+                <div class="mt-8 relative h-[300px] sm:h-[360px] md:h-[400px] lg:h-[440px]">
+                    <div class="absolute right-0 bottom-[1px] w-[190px] sm:w-[220px] md:w-[250px] lg:w-[260px] pointer-events-none drop-shadow-[8px_18px_20px_rgba(0,0,0,0.30)] -scale-x-100">
+                        <img src="{{ asset('images/landing/pen-cropped.png') }}"
+                             alt="Pledge Pen"
+                             class="w-full h-auto object-contain">
+                    </div>
+                    <div class="absolute bottom-0 inset-x-0 flex items-center">
+                        <p class="shrink-0 ms-6 sm:ms-8 font-serif italic text-2xl sm:text-3xl lg:text-[36px] leading-[1.3] text-[#cfaa62] whitespace-nowrap">
+                            {{ $settings->t('pledge_sign_text') ?: __('site.pledge.sign_text') }}
+                        </p>
+                        <div class="flex-1 h-[1.5px] bg-[#cfaa62]"></div>
+                        <div class="shrink-0" style="width:80px"></div>
+                    </div>
+                </div>
+            @endif
 
         </div>
     </section>
@@ -489,7 +545,7 @@
 
         <div class="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 xl:px-[120px]">
             <div class="flex flex-col-reverse xl:flex-row-reverse items-center justify-between gap-12">
-                <div class="flex flex-col items-start text-start gap-6">
+                <div class="w-full xl:w-auto flex flex-col items-start text-start gap-6">
                     <h2 class="font-serif text-3xl sm:text-5xl lg:text-[60px] text-dark-deep leading-[1.15] whitespace-pre-line">{{ $settings->t('messages_title') ?: ($locale === 'en' ? "Client Messages\nAfter Case Closure" : "رسائل وصلتنا\nبعد إغلاق الملف") }}</h2>
                     <p class="text-base lg:text-[19px] text-[#3b362f] leading-[1.8] whitespace-pre-line">{{ $settings->t('messages_subtitle') ?: ($locale === 'en' ? "We do not write testimonials about ourselves.\nThese are real messages from our clients, published with their permission." : "لا نكتب شهادات عن أنفسنا.\nهذه رسائل موكلينا كما أرسلوها، ننشرها بموافقتهم.") }}</p>
                     <a href="#booking" class="bg-gold hover:bg-gold-hover text-dark-black rounded-full ps-6 pe-1.5 py-1.5 font-semibold text-[15px] inline-flex items-center gap-3 pill-btn transition">
@@ -500,8 +556,8 @@
                     </a>
                 </div>
 
-                <div class="flex justify-center xl:-ms-3">
-                    <div class="w-[340px] sm:w-[384px] h-[764px] bg-[#efeae2] border-[12px] border-[#121110] rounded-[52px] shadow-[0px_40px_80px_0px_rgba(28,26,23,0.25)] flex flex-col overflow-hidden relative">
+                <div class="w-full xl:w-auto flex justify-center xl:-ms-3">
+                    <div class="w-full max-w-[340px] sm:max-w-none sm:w-[384px] h-[764px] bg-[#efeae2] border-[12px] border-[#121110] rounded-[52px] shadow-[0px_40px_80px_0px_rgba(28,26,23,0.25)] flex flex-col overflow-hidden relative">
                         
                         {{-- Top Header / Status bar --}}
                         <div class="bg-dark-deep text-white">
@@ -975,7 +1031,7 @@
 
                         {{-- Floating Location Pill --}}
                         <a href="{{ $settings->mapOpenUrl() }}" target="_blank" rel="noopener"
-                           class="absolute bottom-4 {{ $isRtl ? 'right-4' : 'left-4' }} bg-white/95 hover:bg-white text-dark-deep backdrop-blur px-4 py-2 rounded-full shadow-md text-xs sm:text-sm font-semibold flex items-center gap-2 transition hover:scale-105">
+                           class="absolute bottom-4 {{ $isRtl ? 'right-4' : 'left-4' }} max-w-[calc(100%-2rem)] bg-white/95 hover:bg-white text-dark-deep backdrop-blur px-4 py-2 rounded-full shadow-md text-xs sm:text-sm font-semibold flex items-center gap-2 transition hover:scale-105">
                             <span class="size-2 rounded-full bg-gold animate-pulse"></span>
                             <span>{{ $settings->t('address') ?: $lawyerName }}</span>
                             <span class="text-gold text-xs">↗</span>

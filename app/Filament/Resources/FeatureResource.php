@@ -22,13 +22,22 @@ class FeatureResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-star';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'المحتوى';
-
-    protected static ?string $modelLabel = 'ميزة';
-
-    protected static ?string $pluralModelLabel = 'مميزات المكتب (لماذا تختارنا)';
-
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('المحتوى');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('ميزة');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('مميزات المكتب (لماذا تختارنا)');
+    }
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -39,36 +48,36 @@ class FeatureResource extends Resource
     {
         return $schema
             ->schema([
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     TextInput::make('title.ar')
-                        ->label('عنوان الميزة (عربي)')
+                        ->label(__('عنوان الميزة (عربي)'))
                         ->required(fn (string $operation) => $operation === 'create')
                         ->maxLength(255),
                     TextInput::make('title.en')
-                        ->label('Title (English)')
+                        ->label(__('عنوان الميزة (إنجليزي)'))
                         ->maxLength(255),
                 ]),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     Textarea::make('text.ar')
-                        ->label('الشرح (عربي)')
+                        ->label(__('الشرح (عربي)'))
                         ->rows(3),
                     Textarea::make('text.en')
-                        ->label('Description (English)')
+                        ->label(__('الشرح (إنجليزي)'))
                         ->rows(3),
                 ]),
-                Grid::make(3)->schema([
+                Grid::make(3)->columnSpanFull()->schema([
                     Select::make('icon')
-                        ->label('الأيقونة')
+                        ->label(__('الأيقونة'))
                         ->options([
-                            'experience' => 'خبرة',
-                            'strategy' => 'استراتيجية',
-                            'trophy' => 'إنجازات',
-                            'shield' => 'سرية وحماية',
-                            'clock' => 'سرعة استجابة',
-                            'users' => 'فريق عمل',
+                            'experience' => __('خبرة'),
+                            'strategy' => __('استراتيجية'),
+                            'trophy' => __('إنجازات'),
+                            'shield' => __('سرية وحماية'),
+                            'clock' => __('سرعة استجابة'),
+                            'users' => __('فريق عمل'),
                         ]),
-                    TextInput::make('sort_order')->label('ترتيب العرض')->numeric()->default(0),
-                    Toggle::make('is_active')->label('ظاهر في الموقع')->default(true),
+                    TextInput::make('sort_order')->label(__('ترتيب العرض'))->numeric()->default(0),
+                    Toggle::make('is_active')->label(__('ظاهر في الموقع'))->default(true),
                 ]),
             ]);
     }
@@ -78,38 +87,38 @@ class FeatureResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('الميزة')
+                    ->label(__('الميزة'))
                     ->state(fn (Feature $record) => $record->t('title'))
                     ->searchable(query: fn ($query, $search) => $query->where('title->ar', 'like', "%{$search}%")->orWhere('title->en', 'like', "%{$search}%"))
                     ->wrap(),
                 Tables\Columns\TextColumn::make('text')
-                    ->label('الشرح')
+                    ->label(__('الشرح'))
                     ->state(fn (Feature $record) => Str::limit($record->t('text'), 60))
                     ->wrap()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('الترتيب')
+                    ->label(__('الترتيب'))
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('ظاهر')
+                    ->label(__('ظاهر'))
                     ->boolean(),
             ])
             ->reorderable('sort_order')
             ->defaultSort('sort_order')
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_active')->label('ظاهر في الموقع'),
+                Tables\Filters\TernaryFilter::make('is_active')->label(__('ظاهر في الموقع')),
             ])
             ->actions([
-                Actions\EditAction::make()->label('تعديل'),
-                Actions\DeleteAction::make()->label('حذف'),
+                Actions\EditAction::make()->label(__('تعديل')),
+                Actions\DeleteAction::make()->label(__('حذف')),
             ])
             ->bulkActions([
                 Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make()->label('حذف المحدد'),
+                    Actions\DeleteBulkAction::make()->label(__('حذف المحدد')),
                 ]),
             ])
-            ->emptyStateHeading('لا توجد مميزات بعد')
-            ->emptyStateDescription('أضف ما يميز مكتبك لتظهر في قسم «لماذا تختارنا»');
+            ->emptyStateHeading(__('لا توجد مميزات بعد'))
+            ->emptyStateDescription(__('أضف ما يميز مكتبك لتظهر في قسم «لماذا تختارنا»'));
     }
 
     public static function getPages(): array

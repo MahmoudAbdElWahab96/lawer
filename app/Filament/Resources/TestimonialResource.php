@@ -21,13 +21,22 @@ class TestimonialResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'المحتوى';
-
-    protected static ?string $modelLabel = 'رأي عميل';
-
-    protected static ?string $pluralModelLabel = 'آراء العملاء';
-
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('المحتوى');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('رأي عميل');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('آراء العملاء');
+    }
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -39,39 +48,39 @@ class TestimonialResource extends Resource
         return $schema
             ->schema([
                 TextInput::make('client_name')
-                    ->label('اسم العميل')
+                    ->label(__('اسم العميل'))
                     ->required()
                     ->maxLength(255),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     TextInput::make('client_role.ar')
-                        ->label('وصف/نوع القضية (عربي)')
+                        ->label(__('وصف/نوع القضية (عربي)'))
                         ->maxLength(255),
                     TextInput::make('client_role.en')
-                        ->label('Description (English)')
+                        ->label(__('وصف/نوع القضية (إنجليزي)'))
                         ->maxLength(255),
                 ]),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     Textarea::make('content.ar')
-                        ->label('نص الرأي (عربي)')
+                        ->label(__('نص الرأي (عربي)'))
                         ->required(fn (string $operation) => $operation === 'create')
                         ->rows(4),
                     Textarea::make('content.en')
-                        ->label('Testimonial (English)')
+                        ->label(__('نص الرأي (إنجليزي)'))
                         ->rows(4),
                 ]),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     TextInput::make('rating')
-                        ->label('التقييم (من 5)')
+                        ->label(__('التقييم (من 5)'))
                         ->numeric()
                         ->minValue(1)
                         ->maxValue(5)
                         ->default(5),
                     Toggle::make('is_active')
-                        ->label('ظاهر في الموقع')
+                        ->label(__('ظاهر في الموقع'))
                         ->default(true),
                 ]),
                 TextInput::make('sort_order')
-                    ->label('ترتيب العرض')
+                    ->label(__('ترتيب العرض'))
                     ->numeric()
                     ->default(0),
             ]);
@@ -82,21 +91,21 @@ class TestimonialResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('client_name')
-                    ->label('العميل')
+                    ->label(__('العميل'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('content')
-                    ->label('الرأي')
+                    ->label(__('الرأي'))
                     ->state(fn (Testimonial $record) => Str::limit($record->t('content'), 60))
                     ->wrap(),
                 Tables\Columns\TextColumn::make('rating')
-                    ->label('التقييم')
+                    ->label(__('التقييم'))
                     ->formatStateUsing(fn (int $state) => str_repeat('★', $state).str_repeat('☆', 5 - $state)),
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('ظاهر')
+                    ->label(__('ظاهر'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('الترتيب')
+                    ->label(__('الترتيب'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -104,19 +113,19 @@ class TestimonialResource extends Resource
             ->defaultSort('sort_order')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
-                    ->label('ظاهر في الموقع'),
+                    ->label(__('ظاهر في الموقع')),
             ])
             ->actions([
-                Actions\EditAction::make()->label('تعديل'),
-                Actions\DeleteAction::make()->label('حذف'),
+                Actions\EditAction::make()->label(__('تعديل')),
+                Actions\DeleteAction::make()->label(__('حذف')),
             ])
             ->bulkActions([
                 Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make()->label('حذف المحدد'),
+                    Actions\DeleteBulkAction::make()->label(__('حذف المحدد')),
                 ]),
             ])
-            ->emptyStateHeading('لا توجد آراء بعد')
-            ->emptyStateDescription('أضف آراء عملائك لبناء الثقة مع الزوار');
+            ->emptyStateHeading(__('لا توجد آراء بعد'))
+            ->emptyStateDescription(__('أضف آراء عملائك لبناء الثقة مع الزوار'));
     }
 
     public static function getPages(): array

@@ -13,7 +13,7 @@ class ListFeatures extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('إضافة ميزة'),
+            Actions\CreateAction::make()->label(__('إضافة ميزة')),
         ];
     }
 }

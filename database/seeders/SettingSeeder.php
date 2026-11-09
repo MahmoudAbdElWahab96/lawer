@@ -50,6 +50,7 @@ class SettingSeeder extends Seeder
             'instagram' => 'https://instagram.com',
             'linkedin' => 'https://linkedin.com',
             'x_url' => null,
+            'tiktok' => 'https://www.tiktok.com',
             'youtube' => 'https://youtube.com',
             'years_experience' => 15,
             'cases_count' => 2000,

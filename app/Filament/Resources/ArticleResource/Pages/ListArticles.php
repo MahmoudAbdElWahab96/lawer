@@ -13,7 +13,7 @@ class ListArticles extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('مقال جديد'),
+            Actions\CreateAction::make()->label(__('مقال جديد')),
         ];
     }
 }

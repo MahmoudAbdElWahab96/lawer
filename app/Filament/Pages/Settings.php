@@ -21,15 +21,24 @@ class Settings extends Page
 
     protected string $view = 'filament.pages.settings';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'الإعدادات';
-
-    protected static ?string $navigationLabel = 'إعدادات الموقع واللاندنج بيج';
-
-    protected static ?string $title = 'إعدادات الموقع والواجهة';
-
     protected static ?int $navigationSort = 1;
 
     public ?array $data = [];
+
+    public static function getNavigationGroup(): string
+    {
+        return __('الإعدادات');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('إعدادات الموقع واللاندنج بيج');
+    }
+
+    public function getTitle(): string
+    {
+        return __('إعدادات الموقع والواجهة');
+    }
 
     public function mount(): void
     {
@@ -65,63 +74,63 @@ class Settings extends Page
 
     protected function officeSection(): Section
     {
-        return Section::make('1. بيانات المحامي والمكتب الأساسية')
+        return Section::make(__('1. بيانات المحامي والمكتب الأساسية'))
             ->icon('heroicon-o-identification')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('lawyer_name.ar')->label('اسم المحامي (عربي)')->required()->maxLength(255),
-                    TextInput::make('lawyer_name.en')->label('Lawyer Name (English)')->required()->maxLength(255),
-                    TextInput::make('lawyer_title.ar')->label('المسمى / الصفة (عربي)')->maxLength(255),
-                    TextInput::make('lawyer_title.en')->label('Title / Credentials (English)')->maxLength(255),
-                    TextInput::make('bar_admission_year')->label('سنة القيد بنقابة المحامين (مثال: 2009)')->maxLength(50),
-                    TextInput::make('email')->label('البريد الإلكتروني')->email()->maxLength(255),
+                    TextInput::make('lawyer_name.ar')->label(__('اسم المحامي (عربي)'))->required()->maxLength(255),
+                    TextInput::make('lawyer_name.en')->label(__('اسم المحامي (إنجليزي)'))->required()->maxLength(255),
+                    TextInput::make('lawyer_title.ar')->label(__('المسمى / الصفة (عربي)'))->maxLength(255),
+                    TextInput::make('lawyer_title.en')->label(__('المسمى / الصفة (إنجليزي)'))->maxLength(255),
+                    TextInput::make('bar_admission_year')->label(__('سنة القيد بنقابة المحامين (مثال: 2009)'))->maxLength(50),
+                    TextInput::make('email')->label(__('البريد الإلكتروني'))->email()->maxLength(255),
                 ]),
             ]);
     }
 
     protected function heroSection(): Section
     {
-        return Section::make('2. الواجهة الأولى (Hero Section)')
+        return Section::make(__('2. الواجهة الأولى (Hero Section)'))
             ->icon('heroicon-o-sparkles')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('hero_headline.ar')->label('العنوان الرئيسي (عربي)')->maxLength(255),
-                    TextInput::make('hero_headline.en')->label('Headline (English)')->maxLength(255),
-                    Textarea::make('hero_subheadline.ar')->label('العنوان الفرعي (عربي)')->rows(3),
-                    Textarea::make('hero_subheadline.en')->label('Sub-headline (English)')->rows(3),
+                    TextInput::make('hero_headline.ar')->label(__('العنوان الرئيسي (عربي)'))->maxLength(255),
+                    TextInput::make('hero_headline.en')->label(__('العنوان الرئيسي (إنجليزي)'))->maxLength(255),
+                    Textarea::make('hero_subheadline.ar')->label(__('العنوان الفرعي (عربي)'))->rows(3),
+                    Textarea::make('hero_subheadline.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(3),
                 ]),
                 FileUpload::make('hero_image_path')
-                    ->label('صورة المحامي في الواجهة (اختياري)')
+                    ->label(__('صورة المحامي في الواجهة (اختياري)'))
                     ->image()
                     ->directory('settings')
                     ->disk('public')
                     ->imageEditor()
-                    ->helperText('إذا تُركت فارغة تُستخدم صورة التصميم الأصلية'),
+                    ->helperText(__('إذا تُركت فارغة تُستخدم صورة التصميم الأصلية')),
             ]);
     }
 
     protected function statsSection(): Section
     {
-        return Section::make('3. شريط أرقام وإحصائيات الهيرو')
+        return Section::make(__('3. شريط أرقام وإحصائيات الهيرو'))
             ->icon('heroicon-o-chart-bar')
             ->collapsible()
             ->schema([
                 Grid::make(3)->schema([
                     TextInput::make('years_experience')
-                        ->label('سنوات الخبرة')
-                        ->helperText('تظهر: +15 عامًا من الممارسة / Years of Practice')
+                        ->label(__('سنوات الخبرة'))
+                        ->helperText(__('تظهر: +15 عامًا من الممارسة / Years of Practice'))
                         ->numeric()
                         ->minValue(0),
                     TextInput::make('clients_count')
-                        ->label('عدد الموكلين')
-                        ->helperText('تظهر: +2000 موكل وثقوا بنا / Clients Trusted Us')
+                        ->label(__('عدد الموكلين'))
+                        ->helperText(__('تظهر: +2000 موكل وثقوا بنا / Clients Trusted Us'))
                         ->numeric()
                         ->minValue(0),
                     TextInput::make('lawyers_count')
-                        ->label('محامو الفريق')
-                        ->helperText('تظهر: +20 محاميًا في الفريق / Lawyers in the Team')
+                        ->label(__('محامو الفريق'))
+                        ->helperText(__('تظهر: +20 محاميًا في الفريق / Lawyers in the Team'))
                         ->numeric()
                         ->minValue(0),
                 ]),
@@ -130,178 +139,179 @@ class Settings extends Page
 
     protected function aboutSection(): Section
     {
-        return Section::make('4. قسم «عن المستشار»')
+        return Section::make(__('4. قسم «عن المستشار»'))
             ->icon('heroicon-o-user')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('about_title.ar')->label('عنوان القسم (عربي)')->maxLength(255),
-                    TextInput::make('about_title.en')->label('Section Title (English)')->maxLength(255),
+                    TextInput::make('about_title.ar')->label(__('عنوان القسم (عربي)'))->maxLength(255),
+                    TextInput::make('about_title.en')->label(__('عنوان القسم (إنجليزي)'))->maxLength(255),
                 ]),
-                RichEditor::make('about_text.ar')->label('نبذة عن المستشار (عربي)')->columnSpanFull(),
-                RichEditor::make('about_text.en')->label('About the Counselor (English)')->columnSpanFull(),
+                RichEditor::make('about_text.ar')->label(__('نبذة عن المستشار (عربي)'))->columnSpanFull(),
+                RichEditor::make('about_text.en')->label(__('نبذة عن المستشار (إنجليزي)'))->columnSpanFull(),
             ]);
     }
 
     protected function practiceSection(): Section
     {
-        return Section::make('5. قسم مجالات الممارسة: ملفات نحملها عنك')
+        return Section::make(__('5. قسم مجالات الممارسة: ملفات نحملها عنك'))
             ->icon('heroicon-o-scale')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('practice_title.ar')->label('عنوان السكشن (عربي)')->maxLength(255),
-                    TextInput::make('practice_title.en')->label('Section Title (English)')->maxLength(255),
-                    Textarea::make('practice_subtitle.ar')->label('العنوان الفرعي (عربي)')->rows(2),
-                    Textarea::make('practice_subtitle.en')->label('Subtitle (English)')->rows(2),
-                    TextInput::make('practice_banner_title.ar')->label('عنوان بانر لا تعرف من أين تبدأ (عربي)')->maxLength(255),
-                    TextInput::make('practice_banner_title.en')->label('Banner Title (English)')->maxLength(255),
-                    Textarea::make('practice_banner_text.ar')->label('نص بانر الواتساب (عربي)')->rows(2),
-                    Textarea::make('practice_banner_text.en')->label('Banner Text (English)')->rows(2),
+                    TextInput::make('practice_title.ar')->label(__('عنوان السكشن (عربي)'))->maxLength(255),
+                    TextInput::make('practice_title.en')->label(__('عنوان السكشن (إنجليزي)'))->maxLength(255),
+                    Textarea::make('practice_subtitle.ar')->label(__('العنوان الفرعي (عربي)'))->rows(2),
+                    Textarea::make('practice_subtitle.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(2),
+                    TextInput::make('practice_banner_title.ar')->label(__('عنوان بانر لا تعرف من أين تبدأ (عربي)'))->maxLength(255),
+                    TextInput::make('practice_banner_title.en')->label(__('عنوان بانر لا تعرف من أين تبدأ (إنجليزي)'))->maxLength(255),
+                    Textarea::make('practice_banner_text.ar')->label(__('نص بانر الواتساب (عربي)'))->rows(2),
+                    Textarea::make('practice_banner_text.en')->label(__('نص بانر الواتساب (إنجليزي)'))->rows(2),
                 ]),
             ]);
     }
 
     protected function pledgeSection(): Section
     {
-        return Section::make('6. قسم التعهدات: أربعة بنود نلتزم بها')
+        return Section::make(__('6. قسم التعهدات: أربعة بنود نلتزم بها'))
             ->icon('heroicon-o-document-check')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    Textarea::make('pledge_title.ar')->label('عنوان سكشن التعهد (عربي)')->rows(2),
-                    Textarea::make('pledge_title.en')->label('Pledge Title (English)')->rows(2),
-                    Textarea::make('pledge_subtitle.ar')->label('العنوان الفرعي للتعهد (عربي)')->rows(2),
-                    Textarea::make('pledge_subtitle.en')->label('Pledge Subtitle (English)')->rows(2),
-                    TextInput::make('pledge_sign_text.ar')->label('نص توقيع القلم (عربي)')->maxLength(255),
-                    TextInput::make('pledge_sign_text.en')->label('Signature Text (English)')->maxLength(255),
+                    Textarea::make('pledge_title.ar')->label(__('عنوان سكشن التعهد (عربي)'))->rows(2),
+                    Textarea::make('pledge_title.en')->label(__('عنوان سكشن التعهد (إنجليزي)'))->rows(2),
+                    Textarea::make('pledge_subtitle.ar')->label(__('العنوان الفرعي للتعهد (عربي)'))->rows(2),
+                    Textarea::make('pledge_subtitle.en')->label(__('العنوان الفرعي للتعهد (إنجليزي)'))->rows(2),
+                    TextInput::make('pledge_sign_text.ar')->label(__('نص توقيع القلم (عربي)'))->maxLength(255),
+                    TextInput::make('pledge_sign_text.en')->label(__('نص توقيع القلم (إنجليزي)'))->maxLength(255),
                 ]),
             ]);
     }
 
     protected function routeSection(): Section
     {
-        return Section::make('7. قسم مسار الملف: من أول مكالمة حتى إغلاق الملف')
+        return Section::make(__('7. قسم مسار الملف: من أول مكالمة حتى إغلاق الملف'))
             ->icon('heroicon-o-map')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('route_title.ar')->label('عنوان السكشن (عربي)')->maxLength(255),
-                    TextInput::make('route_title.en')->label('Section Title (English)')->maxLength(255),
-                    Textarea::make('route_subtitle.ar')->label('العنوان الفرعي (عربي)')->rows(2),
-                    Textarea::make('route_subtitle.en')->label('Subtitle (English)')->rows(2),
+                    TextInput::make('route_title.ar')->label(__('عنوان السكشن (عربي)'))->maxLength(255),
+                    TextInput::make('route_title.en')->label(__('عنوان السكشن (إنجليزي)'))->maxLength(255),
+                    Textarea::make('route_subtitle.ar')->label(__('العنوان الفرعي (عربي)'))->rows(2),
+                    Textarea::make('route_subtitle.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(2),
                 ]),
             ]);
     }
 
     protected function messagesSection(): Section
     {
-        return Section::make('8. قسم محاكاة محادثة الواتساب: محاميك في جيبك')
+        return Section::make(__('8. قسم محاكاة محادثة الواتساب: محاميك في جيبك'))
             ->icon('heroicon-o-chat-bubble-bottom-center-text')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('messages_title.ar')->label('عنوان السكشن (عربي)')->maxLength(255),
-                    TextInput::make('messages_title.en')->label('Section Title (English)')->maxLength(255),
-                    Textarea::make('messages_subtitle.ar')->label('العنوان الفرعي (عربي)')->rows(2),
-                    Textarea::make('messages_subtitle.en')->label('Subtitle (English)')->rows(2),
+                    TextInput::make('messages_title.ar')->label(__('عنوان السكشن (عربي)'))->maxLength(255),
+                    TextInput::make('messages_title.en')->label(__('عنوان السكشن (إنجليزي)'))->maxLength(255),
+                    Textarea::make('messages_subtitle.ar')->label(__('العنوان الفرعي (عربي)'))->rows(2),
+                    Textarea::make('messages_subtitle.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(2),
                 ]),
             ]);
     }
 
     protected function faqSection(): Section
     {
-        return Section::make('9. قسم الأسئلة الشائعة')
+        return Section::make(__('9. قسم الأسئلة الشائعة'))
             ->icon('heroicon-o-question-mark-circle')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('faq_title.ar')->label('عنوان السكشن (عربي)')->maxLength(255),
-                    TextInput::make('faq_title.en')->label('Section Title (English)')->maxLength(255),
-                    Textarea::make('faq_subtitle.ar')->label('العنوان الفرعي (عربي)')->rows(2),
-                    Textarea::make('faq_subtitle.en')->label('Subtitle (English)')->rows(2),
+                    TextInput::make('faq_title.ar')->label(__('عنوان السكشن (عربي)'))->maxLength(255),
+                    TextInput::make('faq_title.en')->label(__('عنوان السكشن (إنجليزي)'))->maxLength(255),
+                    Textarea::make('faq_subtitle.ar')->label(__('العنوان الفرعي (عربي)'))->rows(2),
+                    Textarea::make('faq_subtitle.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(2),
                 ]),
             ]);
     }
 
     protected function bookingSection(): Section
     {
-        return Section::make('10. قسم حجز الاستشارة: افتح ملفك معنا اليوم')
+        return Section::make(__('10. قسم حجز الاستشارة: افتح ملفك معنا اليوم'))
             ->icon('heroicon-o-clipboard-document-list')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    Textarea::make('booking_title.ar')->label('عنوان السكشن (عربي)')->rows(2),
-                    Textarea::make('booking_title.en')->label('Section Title (English)')->rows(2),
-                    Textarea::make('booking_subtitle.ar')->label('العنوان الفرعي (عربي)')->rows(2),
-                    Textarea::make('booking_subtitle.en')->label('Subtitle (English)')->rows(2),
+                    Textarea::make('booking_title.ar')->label(__('عنوان السكشن (عربي)'))->rows(2),
+                    Textarea::make('booking_title.en')->label(__('عنوان السكشن (إنجليزي)'))->rows(2),
+                    Textarea::make('booking_subtitle.ar')->label(__('العنوان الفرعي (عربي)'))->rows(2),
+                    Textarea::make('booking_subtitle.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(2),
                 ]),
             ]);
     }
 
     protected function contactSection(): Section
     {
-        return Section::make('11. بيانات التواصل، موقع المكتب والخريطة')
+        return Section::make(__('11. بيانات التواصل، موقع المكتب والخريطة'))
             ->icon('heroicon-o-map-pin')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('contact_title.ar')->label('عنوان السكشن (عربي)')->maxLength(255),
-                    TextInput::make('contact_title.en')->label('Section Title (English)')->maxLength(255),
-                    Textarea::make('contact_subtitle.ar')->label('العنوان الفرعي (عربي)')->rows(2),
-                    Textarea::make('contact_subtitle.en')->label('Subtitle (English)')->rows(2),
+                    TextInput::make('contact_title.ar')->label(__('عنوان السكشن (عربي)'))->maxLength(255),
+                    TextInput::make('contact_title.en')->label(__('عنوان السكشن (إنجليزي)'))->maxLength(255),
+                    Textarea::make('contact_subtitle.ar')->label(__('العنوان الفرعي (عربي)'))->rows(2),
+                    Textarea::make('contact_subtitle.en')->label(__('العنوان الفرعي (إنجليزي)'))->rows(2),
                 ]),
                 Grid::make(2)->schema([
-                    TextInput::make('phone')->label('رقم الهاتف')->tel()->maxLength(255),
-                    TextInput::make('whatsapp')->label('رقم الواتساب')->tel()->helperText('بصيغة دولية مثل +201101201034')->maxLength(255),
+                    TextInput::make('phone')->label(__('رقم الهاتف'))->tel()->maxLength(255),
+                    TextInput::make('whatsapp')->label(__('رقم الواتساب'))->tel()->helperText(__('بصيغة دولية مثل +201101201034'))->maxLength(255),
                     TextInput::make('map_embed_url')
-                        ->label('موقع المكتب في خرائط جوجل')
+                        ->label(__('موقع المكتب في خرائط جوجل'))
                         ->maxLength(1000)
-                        ->helperText('يمكنك وضع رابط المشاركة (maps.app.goo.gl)، أو رابط التضمين، أو كود iframe، حيث يتم التعرف عليه وتضمينه تلقائيًا.'),
+                        ->helperText(__('يمكنك وضع رابط المشاركة (maps.app.goo.gl)، أو رابط التضمين، أو كود iframe، حيث يتم التعرف عليه وتضمينه تلقائيًا.')),
                 ]),
                 Grid::make(2)->schema([
-                    TextInput::make('address.ar')->label('العنوان (عربي)')->maxLength(500),
-                    TextInput::make('address.en')->label('Address (English)')->maxLength(500),
-                    TextInput::make('working_hours.ar')->label('مواعيد العمل (عربي)')->maxLength(255),
-                    TextInput::make('working_hours.en')->label('Working hours (English)')->maxLength(255),
+                    TextInput::make('address.ar')->label(__('العنوان (عربي)'))->maxLength(500),
+                    TextInput::make('address.en')->label(__('العنوان (إنجليزي)'))->maxLength(500),
+                    TextInput::make('working_hours.ar')->label(__('مواعيد العمل (عربي)'))->maxLength(255),
+                    TextInput::make('working_hours.en')->label(__('مواعيد العمل (إنجليزي)'))->maxLength(255),
                 ]),
                 Grid::make(2)->schema([
-                    Textarea::make('footer_text.ar')->label('نص الفوتر التعريفي (عربي)')->rows(2)->maxLength(255),
-                    Textarea::make('footer_text.en')->label('Footer Description Text (English)')->rows(2)->maxLength(255),
+                    Textarea::make('footer_text.ar')->label(__('نص الفوتر التعريفي (عربي)'))->rows(2)->maxLength(255),
+                    Textarea::make('footer_text.en')->label(__('نص الفوتر التعريفي (إنجليزي)'))->rows(2)->maxLength(255),
                 ]),
                 Grid::make(3)->schema([
-                    TextInput::make('facebook')->label('فيسبوك')->url()->maxLength(255),
-                    TextInput::make('instagram')->label('إنستجرام')->url()->maxLength(255),
-                    TextInput::make('linkedin')->label('لينكدإن')->url()->maxLength(255),
-                    TextInput::make('x_url')->label('X (تويتر)')->url()->maxLength(255),
-                    TextInput::make('youtube')->label('يوتيوب')->url()->maxLength(255),
+                    TextInput::make('facebook')->label(__('فيسبوك'))->url()->maxLength(255),
+                    TextInput::make('instagram')->label(__('إنستجرام'))->url()->maxLength(255),
+                    TextInput::make('linkedin')->label(__('لينكدإن'))->url()->maxLength(255),
+                    TextInput::make('x_url')->label(__('X (تويتر)'))->url()->maxLength(255),
+                    TextInput::make('youtube')->label(__('يوتيوب'))->url()->maxLength(255),
+                    TextInput::make('tiktok')->label(__('تيك توك'))->url()->maxLength(255),
                 ]),
             ]);
     }
 
     protected function seoSection(): Section
     {
-        return Section::make('12. إعدادات SEO وكود التحقق من Google')
+        return Section::make(__('12. إعدادات SEO وكود التحقق من Google'))
             ->icon('heroicon-o-globe-alt')
             ->collapsible()
             ->schema([
                 Grid::make(2)->schema([
-                    TextInput::make('seo_meta_title.ar')->label('عنوان الصفحة في نتائج البحث (عربي)')->maxLength(70),
-                    TextInput::make('seo_meta_title.en')->label('Meta Title (English)')->maxLength(70),
-                    Textarea::make('seo_meta_description.ar')->label('وصف الصفحة في نتائج البحث (عربي)')->rows(3)->maxLength(170),
-                    Textarea::make('seo_meta_description.en')->label('Meta Description (English)')->rows(3)->maxLength(170),
-                    Textarea::make('seo_keywords.ar')->label('الكلمات المفتاحية (عربي)')->rows(2),
-                    Textarea::make('seo_keywords.en')->label('Keywords (English)')->rows(2),
+                    TextInput::make('seo_meta_title.ar')->label(__('عنوان الصفحة في نتائج البحث (عربي)'))->maxLength(70),
+                    TextInput::make('seo_meta_title.en')->label(__('عنوان الصفحة في نتائج البحث (إنجليزي)'))->maxLength(70),
+                    Textarea::make('seo_meta_description.ar')->label(__('وصف الصفحة في نتائج البحث (عربي)'))->rows(3)->maxLength(170),
+                    Textarea::make('seo_meta_description.en')->label(__('وصف الصفحة في نتائج البحث (إنجليزي)'))->rows(3)->maxLength(170),
+                    Textarea::make('seo_keywords.ar')->label(__('الكلمات المفتاحية (عربي)'))->rows(2),
+                    Textarea::make('seo_keywords.en')->label(__('الكلمات المفتاحية (إنجليزي)'))->rows(2),
                 ]),
                 FileUpload::make('seo_og_image_path')
-                    ->label('صورة المشاركة الاجتماعية (Open Graph)')
+                    ->label(__('صورة المشاركة الاجتماعية (Open Graph)'))
                     ->image()
                     ->directory('settings')
                     ->disk('public')
                     ->imageEditor(),
                 Grid::make(2)->schema([
-                    Toggle::make('seo_robots_index')->label('السماح لمحركات البحث بفهرسة الموقع')->default(true),
-                    TextInput::make('google_verification')->label('كود التحقق من Google Search Console')->maxLength(255),
+                    Toggle::make('seo_robots_index')->label(__('السماح لمحركات البحث بفهرسة الموقع'))->default(true),
+                    TextInput::make('google_verification')->label(__('كود التحقق من Google Search Console'))->maxLength(255),
                 ]),
             ]);
     }
@@ -310,7 +320,7 @@ class Settings extends Page
     {
         return [
             Action::make('save')
-                ->label('حفظ جميع الإعدادات')
+                ->label(__('حفظ جميع الإعدادات'))
                 ->icon('heroicon-o-check-circle')
                 ->action(fn () => $this->save()),
         ];
@@ -327,7 +337,7 @@ class Settings extends Page
         Setting::query()->updateOrCreate(['id' => 1], $data);
 
         Notification::make()
-            ->title('تم حفظ وتحديث جميع إعدادات الموقع بنجاح')
+            ->title(__('تم حفظ وتحديث جميع إعدادات الموقع بنجاح'))
             ->success()
             ->send();
     }

@@ -16,21 +16,21 @@ class Stats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('طلبات جديدة', ContactMessage::query()->where('is_read', false)->count())
-                ->description('من فورم حجز الاستشارة')
+            Stat::make(__('طلبات جديدة'), ContactMessage::query()->where('is_read', false)->count())
+                ->description(__('من فورم حجز الاستشارة'))
                 ->descriptionIcon('heroicon-m-inbox')
                 ->color(ContactMessage::query()->where('is_read', false)->exists() ? 'danger' : 'gray')
                 ->url(ContactMessageResource::getUrl()),
-            Stat::make('إجمالي الطلبات', ContactMessage::query()->count())
-                ->description('جميع الاستشارات المستلمة')
+            Stat::make(__('إجمالي الطلبات'), ContactMessage::query()->count())
+                ->description(__('جميع الاستشارات المستلمة'))
                 ->descriptionIcon('heroicon-m-envelope')
                 ->color('info'),
-            Stat::make('مجالات الممارسة', PracticeArea::query()->where('is_active', true)->count())
-                ->description('المعروضة في صفحة الموقع')
+            Stat::make(__('مجالات الممارسة'), PracticeArea::query()->where('is_active', true)->count())
+                ->description(__('المعروضة في صفحة الموقع'))
                 ->descriptionIcon('heroicon-m-scale')
                 ->color('warning'),
-            Stat::make('الأسئلة الشائعة', Faq::query()->where('is_active', true)->count())
-                ->description('المعروضة في قسم الأسئلة')
+            Stat::make(__('الأسئلة الشائعة'), Faq::query()->where('is_active', true)->count())
+                ->description(__('المعروضة في قسم الأسئلة'))
                 ->descriptionIcon('heroicon-m-question-mark-circle')
                 ->color('success'),
         ];

@@ -13,7 +13,7 @@ class ListTestimonials extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('إضافة رأي'),
+            Actions\CreateAction::make()->label(__('إضافة رأي')),
         ];
     }
 }

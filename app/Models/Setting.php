@@ -30,6 +30,7 @@ class Setting extends Model
         'instagram',
         'linkedin',
         'x_url',
+        'tiktok',
         'youtube',
         'years_experience',
         'cases_count',
@@ -156,6 +157,7 @@ class Setting extends Model
             'instagram' => $this->instagram,
             'linkedin' => $this->linkedin,
             'x' => $this->x_url,
+            'tiktok' => $this->tiktok,
             'youtube' => $this->youtube,
         ]);
     }

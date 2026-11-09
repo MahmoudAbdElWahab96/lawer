@@ -13,7 +13,7 @@ class ListPracticeAreas extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('إضافة مجال'),
+            Actions\CreateAction::make()->label(__('إضافة مجال')),
         ];
     }
 }

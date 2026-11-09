@@ -13,7 +13,7 @@ class EditFeature extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make()->label('حذف'),
+            Actions\DeleteAction::make()->label(__('حذف')),
         ];
     }
 

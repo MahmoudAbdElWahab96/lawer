@@ -15,7 +15,7 @@ class ListContactMessages extends ListRecords
     {
         return [
             Actions\Action::make('markAllRead')
-                ->label('تعليم الكل كمقروء')
+                ->label(__('تعليم الكل كمقروء'))
                 ->icon('heroicon-o-check-badge')
                 ->action(fn () => ContactMessage::query()->where('is_read', false)->update(['is_read' => true]))
                 ->requiresConfirmation(),

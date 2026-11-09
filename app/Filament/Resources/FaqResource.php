@@ -9,7 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -21,45 +21,61 @@ class FaqResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-question-mark-circle';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'محتوى الموقع';
-
-    protected static ?string $modelLabel = 'سؤال شائع';
-
-    protected static ?string $pluralModelLabel = 'الأسئلة الشائعة';
-
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('محتوى الموقع');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('سؤال شائع');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('الأسئلة الشائعة');
+    }
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->schema([
-                Grid::make(2)->schema([
-                    Textarea::make('question.ar')
-                        ->label('السؤال (عربي)')
-                        ->required(fn (string $operation) => $operation === 'create')
-                        ->rows(2),
-                    Textarea::make('question.en')
-                        ->label('Question (English)')
-                        ->rows(2),
-                ]),
-                Grid::make(2)->schema([
-                    Textarea::make('answer.ar')
-                        ->label('الإجابة (عربي)')
-                        ->required(fn (string $operation) => $operation === 'create')
-                        ->rows(5),
-                    Textarea::make('answer.en')
-                        ->label('Answer (English)')
-                        ->rows(5),
-                ]),
-                Grid::make(2)->schema([
-                    TextInput::make('sort_order')
-                        ->label('ترتيب العرض')
-                        ->numeric()
-                        ->default(0),
-                    Toggle::make('is_active')
-                        ->label('ظاهر في الموقع')
-                        ->default(true),
-                ]),
+                Section::make(__('السؤال والإجابة'))
+                    ->icon('heroicon-o-language')
+                    ->columnSpanFull()
+                    ->columns(2)
+                    ->schema([
+                        Textarea::make('question.ar')
+                            ->label(__('السؤال (عربي)'))
+                            ->required(fn (string $operation) => $operation === 'create')
+                            ->rows(2),
+                        Textarea::make('question.en')
+                            ->label(__('السؤال (إنجليزي)'))
+                            ->rows(2),
+                        Textarea::make('answer.ar')
+                            ->label(__('الإجابة (عربي)'))
+                            ->required(fn (string $operation) => $operation === 'create')
+                            ->rows(6),
+                        Textarea::make('answer.en')
+                            ->label(__('الإجابة (إنجليزي)'))
+                            ->rows(6),
+                    ]),
+                Section::make(__('إعدادات العرض'))
+                    ->icon('heroicon-o-adjustments-horizontal')
+                    ->columnSpanFull()
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('sort_order')
+                            ->label(__('ترتيب العرض'))
+                            ->numeric()
+                            ->default(0),
+                        Toggle::make('is_active')
+                            ->label(__('ظاهر في الموقع'))
+                            ->default(true)
+                            ->inline(false),
+                    ]),
             ]);
     }
 
@@ -68,34 +84,34 @@ class FaqResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('question')
-                    ->label('السؤال')
+                    ->label(__('السؤال'))
                     ->state(fn (Faq $record) => Str::limit($record->t('question'), 80))
                     ->searchable(query: fn ($query, $search) => $query->where('question->ar', 'like', "%{$search}%")->orWhere('question->en', 'like', "%{$search}%"))
                     ->wrap(),
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->label('الترتيب')
+                    ->label(__('الترتيب'))
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('ظاهر')
+                    ->label(__('ظاهر'))
                     ->boolean(),
             ])
             ->reorderable('sort_order')
             ->defaultSort('sort_order')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
-                    ->label('ظاهر في الموقع'),
+                    ->label(__('ظاهر في الموقع')),
             ])
             ->actions([
-                Actions\EditAction::make()->label('تعديل'),
-                Actions\DeleteAction::make()->label('حذف'),
+                Actions\EditAction::make()->label(__('تعديل')),
+                Actions\DeleteAction::make()->label(__('حذف')),
             ])
             ->bulkActions([
                 Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make()->label('حذف المحدد'),
+                    Actions\DeleteBulkAction::make()->label(__('حذف المحدد')),
                 ]),
             ])
-            ->emptyStateHeading('لا توجد أسئلة بعد')
-            ->emptyStateDescription('أضف الأسئلة الشائعة لتظهر في الموقع وتُحَسِّن الظهور في محركات البحث');
+            ->emptyStateHeading(__('لا توجد أسئلة بعد'))
+            ->emptyStateDescription(__('أضف الأسئلة الشائعة لتظهر في الموقع وتُحَسِّن الظهور في محركات البحث'));
     }
 
     public static function getPages(): array

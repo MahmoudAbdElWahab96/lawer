@@ -25,13 +25,22 @@ class ArticleResource extends Resource
 
     protected static \BackedEnum|null|string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static \UnitEnum|null|string $navigationGroup = 'المحتوى';
-
-    protected static ?string $modelLabel = 'مقال';
-
-    protected static ?string $pluralModelLabel = 'المقالات';
-
     protected static ?int $navigationSort = 4;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('المحتوى');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('مقال');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('المقالات');
+    }
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -42,9 +51,9 @@ class ArticleResource extends Resource
     {
         return $schema
             ->schema([
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     TextInput::make('title.ar')
-                        ->label('عنوان المقال (عربي)')
+                        ->label(__('عنوان المقال (عربي)'))
                         ->required(fn (string $operation) => $operation === 'create')
                         ->maxLength(255)
                         ->live(onBlur: true)
@@ -54,38 +63,38 @@ class ArticleResource extends Resource
                             }
                         }),
                     TextInput::make('title.en')
-                        ->label('Title (English)')
+                        ->label(__('عنوان المقال (إنجليزي)'))
                         ->maxLength(255),
                 ]),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     Textarea::make('excerpt.ar')
-                        ->label('مقدمة مختصرة (عربي) تظهر في نتائج البحث')
+                        ->label(__('مقدمة مختصرة (عربي) تظهر في نتائج البحث'))
                         ->rows(3)
                         ->maxLength(300),
                     Textarea::make('excerpt.en')
-                        ->label('Excerpt (English)')
+                        ->label(__('مقدمة مختصرة (إنجليزي) تظهر في نتائج البحث'))
                         ->rows(3)
                         ->maxLength(300),
                 ]),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     RichEditor::make('body.ar')
-                        ->label('نص المقال (عربي)')
+                        ->label(__('نص المقال (عربي)'))
                         ->columnSpanFull(),
                 ]),
-                Grid::make(2)->schema([
+                Grid::make(2)->columnSpanFull()->schema([
                     RichEditor::make('body.en')
-                        ->label('Article body (English)'),
+                        ->label(__('نص المقال (إنجليزي)')),
                 ]),
-                Section::make('النشر والصورة')->schema([
+                Section::make(__('النشر والصورة'))->schema([
                     TextInput::make('slug')
-                        ->label('الرابط (slug)')
+                        ->label(__('الرابط (slug)'))
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->regex('/^[a-z0-9-]+$/')
-                        ->helperText('حروف إنجليزية صغيرة وأرقام فقط (مثال: example-my-article)')
+                        ->helperText(__('حروف إنجليزية صغيرة وأرقام فقط (مثال: example-my-article)'))
                         ->maxLength(255),
                     FileUpload::make('cover_path')
-                        ->label('صورة الغلاف')
+                        ->label(__('صورة الغلاف'))
                         ->image()
                         ->imageEditor()
                         ->directory('articles')
@@ -93,11 +102,11 @@ class ArticleResource extends Resource
                         ->columnSpanFull(),
                     Grid::make(2)->schema([
                         Toggle::make('is_published')
-                            ->label('منشور')
+                            ->label(__('منشور'))
                             ->default(false)
                             ->live(),
                         DateTimePicker::make('published_at')
-                            ->label('تاريخ النشر')
+                            ->label(__('تاريخ النشر'))
                             ->default(now())
                             ->required(fn (callable $get) => $get('is_published'))
                             ->maxTime(now()->format('H:i:s')),
@@ -111,38 +120,38 @@ class ArticleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('cover_path')
-                    ->label('الغلاف')
+                    ->label(__('الغلاف'))
                     ->disk('public')
                     ->circular(),
                 Tables\Columns\TextColumn::make('title')
-                    ->label('العنوان')
+                    ->label(__('العنوان'))
                     ->state(fn (Article $record) => $record->t('title'))
                     ->searchable(query: fn ($query, $search) => $query->where('title->ar', 'like', "%{$search}%")->orWhere('title->en', 'like', "%{$search}%"))
                     ->wrap(),
                 Tables\Columns\IconColumn::make('is_published')
-                    ->label('منشور')
+                    ->label(__('منشور'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('published_at')
-                    ->label('تاريخ النشر')
+                    ->label(__('تاريخ النشر'))
                     ->date('Y/m/d')
                     ->sortable(),
             ])
             ->defaultSort('published_at', 'desc')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_published')
-                    ->label('منشور'),
+                    ->label(__('منشور')),
             ])
             ->actions([
-                Actions\EditAction::make()->label('تعديل'),
-                Actions\DeleteAction::make()->label('حذف'),
+                Actions\EditAction::make()->label(__('تعديل')),
+                Actions\DeleteAction::make()->label(__('حذف')),
             ])
             ->bulkActions([
                 Actions\BulkActionGroup::make([
-                    Actions\DeleteBulkAction::make()->label('حذف المحدد'),
+                    Actions\DeleteBulkAction::make()->label(__('حذف المحدد')),
                 ]),
             ])
-            ->emptyStateHeading('لا توجد مقالات بعد')
-            ->emptyStateDescription('المقالات أهم أداة لتحسين ترتيب الموقع في محركات البحث');
+            ->emptyStateHeading(__('لا توجد مقالات بعد'))
+            ->emptyStateDescription(__('المقالات أهم أداة لتحسين ترتيب الموقع في محركات البحث'));
     }
 
     public static function getPages(): array

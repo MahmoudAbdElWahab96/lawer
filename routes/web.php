@@ -4,6 +4,7 @@ use App\Http\Controllers\Site\BlogController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\SitemapController;
+use App\Http\Middleware\SetAdminLocale;
 use App\Http\Middleware\SetLocale;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,12 @@ Route::prefix('{locale}')
             ->middleware('throttle:6,1')
             ->name('contact.store');
     });
+
+Route::get('/admin-locale/{locale}', function (string $locale) {
+    session()->put(SetAdminLocale::SESSION_KEY, $locale);
+
+    return back();
+})->whereIn('locale', ['ar', 'en'])->name('admin.locale');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
